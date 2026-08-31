@@ -13,10 +13,7 @@ export class UserEntity {
 
     @Column()
     email: string;
-
-    @OneToMany(() => UserEntity, user => user.orders)
-    orders: UserEntity[];
-
+    
     @Column()
     password: string;
 
