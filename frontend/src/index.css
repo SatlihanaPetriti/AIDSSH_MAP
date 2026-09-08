@@ -3,9 +3,12 @@
 :root {
     --teal: #1C809D;
     --teal-deep: #135F75;
+    --teal-pale: #E4F1F4;
     --orange: #F5821F;
+    --orange-deep: #CC6A14;
     --maroon: #89191C;
     --cream: #FFEEDF;
+    --paper: #FFFFFF;
     --ink: #2A2420;
     --ink-soft: #6B5F55;
     --line: #E7DCCC;
@@ -29,7 +32,17 @@ body,
 }
 
 #app {
-    display: flex;
+    display: none;
     flex-direction: column;
     height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#app.visible {
+    display: flex;
+}
+
+#app.shown {
+    opacity: 1;
 }

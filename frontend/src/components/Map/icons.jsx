@@ -1,10 +1,10 @@
 import L from "leaflet";
 
-export function createPinIcon(color) {
+export function createPinIcon(color, delay = 0) {
     return L.divIcon({
         className: "",
         html: `
-            <div style="width: 28px; height: 36px;">
+            <div class="map-pin" style="width: 28px; height: 36px; animation-delay: ${delay}ms;">
               <svg
                 width="28"
                 height="36"

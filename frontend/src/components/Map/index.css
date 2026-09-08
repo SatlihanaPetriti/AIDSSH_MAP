@@ -29,8 +29,226 @@
     border-color: var(--maroon);
 }
 
+.leaflet-popup-content-wrapper {
+    background: var(--paper) !important;
+    border: 1px solid var(--line) !important;
+    border-top: 3px solid var(--teal) !important;
+    border-radius: 2px !important;
+    box-shadow: 0 10px 32px rgba(42, 36, 32, 0.22) !important;
+}
+
+.leaflet-popup-tip-container {
+    display: none;
+}
+
 .leaflet-popup-content {
     margin: 0 !important;
+}
+
+.leaflet-bar a:hover {
+    background: var(--teal-pale) !important;
+}
+
+.leaflet-control-attribution {
+    background: rgba(255, 255, 255, 0.85) !important;
+    color: var(--ink-soft) !important;
+    font-size: 0.62rem !important;
+}
+
+/* Map pin marker entrance animation */
+.map-pin {
+    opacity: 0;
+    transform: translateY(-14px);
+    animation: pinDrop 0.5s cubic-bezier(0.22, 0.9, 0.4, 1.15) forwards;
+}
+
+@keyframes pinDrop {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.map-pin svg {
+    transition: transform 0.15s ease;
+    transform-origin: 50% 100%;
+}
+
+.map-pin:hover svg {
+    transform: scale(1.16);
+}
+
+/* Marker permanent name label */
+.marker-label {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2px 7px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(42, 36, 32, 0.14);
+    white-space: nowrap;
+}
+
+/* Legend */
+.map-legend {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 400;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+    min-width: 178px;
+    box-shadow: 0 4px 18px rgba(42, 36, 32, 0.12);
+    border-radius: 2px;
+    max-height: calc(100% - 32px);
+    overflow-y: auto;
+}
+
+.legend-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.legend-item:hover {
+    color: var(--ink);
+}
+
+.legend-item.dimmed {
+    opacity: 0.35;
+}
+
+.legend-item.selected {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-count {
+    margin-left: auto;
+    font-size: 0.62rem;
+    color: #A89A88;
+    font-weight: 600;
+}
+
+/* ====== SHTRESA: VENDET E EKZEKUTIMIT/VARRIMIT ====== */
+.site-label {
+    background: transparent;
+    border: none;
+}
+
+.execution-legend {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 400;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--maroon);
+    padding: 14px 16px;
+    min-width: 200px;
+    max-width: 280px;
+    box-shadow: 0 4px 18px rgba(42, 36, 32, 0.12);
+    border-radius: 2px;
+    max-height: calc(100% - 32px);
+    overflow-y: auto;
+    display: none;
+}
+
+.execution-legend.show {
+    display: block;
+}
+
+.execution-legend-group-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.55;
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
+
+.execution-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+}
+
+.execution-legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid var(--maroon);
+}
+
+.execution-legend-note {
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    line-height: 1.5;
+}
+
+/* Popup-et e vogla për shtresën: Harta e Ekzekutimeve/Varrimeve */
+.execution-small-popup .leaflet-popup-content-wrapper {
+    border-top: 2px solid var(--maroon) !important;
+    box-shadow: 0 6px 18px rgba(42, 36, 32, 0.18) !important;
+}
+
+.execution-small-popup .popup-inner {
+    padding: 8px 10px;
+    min-width: 155px;
+    max-width: 245px;
+}
+
+.execution-small-popup .popup-name {
+    font-size: 0.68rem;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.execution-small-popup .popup-detail {
+    font-size: 0.56rem;
+    line-height: 1.28;
+    margin-top: 2px;
+}
+
+.execution-small-popup .popup-divider {
+    margin: 5px 0;
+}
+
+.execution-small-popup .leaflet-popup-close-button {
+    font-size: 14px !important;
+    top: 4px !important;
+    right: 6px !important;
 }
 
 .popup-inner {

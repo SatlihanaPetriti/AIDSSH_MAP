@@ -1,13 +1,20 @@
-import { useSitesContext } from "../../Context/SitesContext";
 import { useExecutionSitesContext } from "../../Context/ExecutionSitesContext";
+import { useMapUIContext } from "../../Context/MapUIContext";
+import logo from "../../assets/logo.svg";
 import "./index.css";
 
 const Header = () => {
-    const { sites } = useSitesContext();
     const { showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
+    const { filteredSites } = useMapUIContext();
 
     return (
         <header id="header">
+            <div className="header-logo">
+                <img src={logo} alt="AIDSSH" className="header-logo-img" />
+            </div>
+
+            <div className="header-sep" />
+
             <div className="header-title">
                 <h1>Harta e Dosjeve ORV</h1>
                 <p>DPB Tiranë</p>
@@ -25,7 +32,7 @@ const Header = () => {
 
             <div className="header-count">
                 <div className="count-badge">
-                    <strong>{sites.length}</strong> Objekte
+                    <strong>{filteredSites.length}</strong> Objekte
                 </div>
             </div>
         </header>

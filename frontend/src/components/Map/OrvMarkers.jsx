@@ -1,16 +1,35 @@
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, Tooltip } from "react-leaflet";
 import { getCategories, getTypeConfig } from "../../db/typeConfig";
+import { useMapUIContext } from "../../Context/MapUIContext";
 import { createPinIcon } from "./icons";
 
 const OrvMarkers = ({ sites }) => {
+    const { labelsVisible, registerMarker, highlightListItem } = useMapUIContext();
+
     return (
         <>
-            {sites.map((site) => {
+            {sites.map((site, index) => {
                 const primaryCategory = getCategories(site.tipiRaw)[0];
                 const { color } = getTypeConfig(primaryCategory);
 
                 return (
-                    <Marker key={site.id} position={[site.lat, site.lon]} icon={createPinIcon(color)}>
+                    <Marker
+                        key={site.id}
+                        position={[site.lat, site.lon]}
+                        icon={createPinIcon(color, Math.min(index * 12, 600))}
+                        ref={(marker) => registerMarker(site.id, marker)}
+                        eventHandlers={{
+                            click: () => highlightListItem(site.id),
+                            popupclose: (e) => {
+                                if (labelsVisible) e.target.openTooltip();
+                            },
+                        }}
+                    >
+                        {labelsVisible && (
+                            <Tooltip permanent direction="top" offset={[0, -32]} className="marker-label">
+                                {site.objekti}
+                            </Tooltip>
+                        )}
                         <Popup maxWidth={300}>
                             <div className="popup-inner">
                                 <div

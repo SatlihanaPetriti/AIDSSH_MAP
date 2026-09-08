@@ -50,3 +50,35 @@ export const EXECUTION_FADE_STOPS = [
     { f: 0.25, opacity: 0.3 },
     { f: 0.16, opacity: 0.4 },
 ];
+
+export const EXECUTION_GROUPS = [
+    { type: 'ekzekutim_varrim', label: 'Vend ekzekutimi & varrimi' },
+    { type: 'ekzekutim', label: 'Vend ekzekutimi' },
+    { type: 'varrim', label: 'Vend varrimi' },
+];
+
+export const EXECUTION_NOTE = 'Zonat janë mbledhur sipas dëshmive nga persona të mbijetuar, shoqata të ish të përndjekurve politikë, ish-funksionarë të regjimit dhe familjarë të viktimave, si vende të dyshuara ekzekutimi/varrimi gjatë periudhës së diktaturës në Tiranë.';
+
+export const ERA_RANGES = {
+    '1969': [1969, 1979],
+    '1980': [1980, 1991],
+};
+
+// Parse a messy Albanian date string → year integer or null
+export const parseYear = (str) => {
+    if (!str) return null;
+    const m = str.match(/\b(1[89]\d{2})\b/);
+    if (m) return parseInt(m[1], 10);
+    const m2 = str.match(/\b(\d{2})\b/);
+    if (m2) return 1900 + parseInt(m2[1], 10);
+    return null;
+};
+
+// Returns true if the site was active (open) at any point within [start, end]
+export const isActiveInPeriod = (site, start, end) => {
+    const opened = parseYear(site.dataHapjes);
+    if (!opened) return false;
+    const closed = parseYear(site.dataMbylljes);
+    const closedYear = closed || 9999;
+    return opened <= end && closedYear >= start;
+};

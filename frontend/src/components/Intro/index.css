@@ -1,0 +1,287 @@
+#intro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background:
+        radial-gradient(circle at 50% 38%, rgba(19, 95, 117, 0.22) 0%, transparent 52%),
+        radial-gradient(circle at 20% 80%, rgba(137, 25, 28, 0.10) 0%, transparent 40%),
+        linear-gradient(160deg, #FBE8D5 0%, #F5DEC5 55%, var(--cream) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#intro.exit {
+    pointer-events: none;
+}
+
+.intro-rule-top,
+.intro-rule-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal) 0%, var(--orange) 50%, var(--maroon) 100%);
+    transform: scaleX(0);
+    animation: ruleSlide 1.4s 0.15s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.intro-rule-top {
+    top: 0;
+}
+
+.intro-rule-bottom {
+    bottom: 0;
+}
+
+.intro-rule-top.flash,
+.intro-rule-bottom.flash {
+    animation: ruleFlash 0.5s ease-out forwards !important;
+    transform: scaleX(1);
+}
+
+@keyframes ruleSlide {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes ruleFlash {
+    0% {
+        height: 3px;
+        opacity: 1;
+    }
+
+    40% {
+        height: 8px;
+        opacity: 1;
+    }
+
+    100% {
+        height: 3px;
+        opacity: 0;
+    }
+}
+
+.intro-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.intro-rings span {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(28, 128, 157, 0.55);
+    animation: ringPulse 5s ease-in-out infinite;
+    box-shadow: 0 0 18px rgba(28, 128, 157, 0.18), inset 0 0 18px rgba(28, 128, 157, 0.06);
+}
+
+.intro-rings span:nth-child(1) {
+    width: 380px;
+    height: 380px;
+    border-color: rgba(19, 95, 117, 0.70);
+    box-shadow: 0 0 22px rgba(19, 95, 117, 0.22), inset 0 0 14px rgba(19, 95, 117, 0.08);
+}
+
+.intro-rings span:nth-child(2) {
+    width: 580px;
+    height: 580px;
+    animation-delay: 0.9s;
+    border-color: rgba(245, 130, 31, 0.55);
+    border-width: 2px;
+    box-shadow: 0 0 22px rgba(245, 130, 31, 0.16), inset 0 0 14px rgba(245, 130, 31, 0.06);
+}
+
+.intro-rings span:nth-child(3) {
+    width: 780px;
+    height: 780px;
+    animation-delay: 1.8s;
+    border-color: rgba(137, 25, 28, 0.45);
+    border-width: 1.5px;
+    box-shadow: 0 0 22px rgba(137, 25, 28, 0.14), inset 0 0 14px rgba(137, 25, 28, 0.05);
+}
+
+@keyframes ringPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.65;
+    }
+
+    50% {
+        transform: scale(1.045);
+        opacity: 1;
+    }
+}
+
+.intro-rings.burst span {
+    animation: none !important;
+}
+
+.intro-rings.burst span:nth-child(1) {
+    animation: ringBurst1 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards !important;
+}
+
+.intro-rings.burst span:nth-child(2) {
+    animation: ringBurst2 0.6s 0.04s cubic-bezier(0.22, 0.61, 0.36, 1) forwards !important;
+}
+
+.intro-rings.burst span:nth-child(3) {
+    animation: ringBurst3 0.65s 0.08s cubic-bezier(0.22, 0.61, 0.36, 1) forwards !important;
+}
+
+@keyframes ringBurst1 {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        background: transparent;
+        border-width: 2px;
+    }
+
+    30% {
+        transform: scale(1.08);
+        opacity: 1;
+        background: rgba(19, 95, 117, 0.18);
+        border-color: rgba(19, 95, 117, 0.9);
+        border-width: 3px;
+    }
+
+    100% {
+        transform: scale(4.5);
+        opacity: 0;
+        background: rgba(19, 95, 117, 0.28);
+        border-color: rgba(19, 95, 117, 0.0);
+    }
+}
+
+@keyframes ringBurst2 {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        background: transparent;
+        border-width: 2px;
+    }
+
+    30% {
+        transform: scale(1.08);
+        opacity: 1;
+        background: rgba(245, 130, 31, 0.15);
+        border-color: rgba(245, 130, 31, 0.9);
+        border-width: 3px;
+    }
+
+    100% {
+        transform: scale(3.5);
+        opacity: 0;
+        background: rgba(245, 130, 31, 0.22);
+        border-color: rgba(245, 130, 31, 0.0);
+    }
+}
+
+@keyframes ringBurst3 {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        background: transparent;
+        border-width: 1.5px;
+    }
+
+    30% {
+        transform: scale(1.06);
+        opacity: 1;
+        background: rgba(137, 25, 28, 0.12);
+        border-color: rgba(137, 25, 28, 0.9);
+        border-width: 2.5px;
+    }
+
+    100% {
+        transform: scale(2.8);
+        opacity: 0;
+        background: rgba(137, 25, 28, 0.18);
+        border-color: rgba(137, 25, 28, 0.0);
+    }
+}
+
+.intro-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.intro-content.fading {
+    opacity: 0;
+    transform: scale(0.96);
+}
+
+.logo-wrapper {
+    position: relative;
+    opacity: 0;
+    transform: translateY(-18px) scale(0.94);
+    animation: logoReveal 0.9s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes logoReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.intro-logo-img {
+    width: 320px;
+    height: auto;
+    display: block;
+}
+
+.intro-hint {
+    opacity: 0;
+    animation: fadeUp 0.7s 1.7s ease-out forwards;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-soft);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+    }
+}
+
+.intro-hint .chevron {
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid var(--orange);
+    border-bottom: 1.5px solid var(--orange);
+    transform: rotate(45deg);
+    animation: chevronBob 1.6s ease-in-out infinite;
+}
+
+@keyframes chevronBob {
+
+    0%,
+    100% {
+        transform: rotate(45deg) translate(0, 0);
+    }
+
+    50% {
+        transform: rotate(45deg) translate(3px, 3px);
+    }
+}
