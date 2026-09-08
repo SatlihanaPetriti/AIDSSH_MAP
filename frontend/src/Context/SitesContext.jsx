@@ -11,19 +11,20 @@ const SitesContext = createContext({});
 
 // Provider
 const SitesProvider = (props) => {
+    const { cityId } = props;
     const [sites, setSites] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         getAllSites();
-    }, []);
+    }, [cityId]);
 
-    // GET ALL
+    // GET ALL (for the given city, or every site if no cityId was passed)
     const getAllSites = async () => {
         setLoading(true);
         try {
-            const result = await get_sites_service();
+            const result = await get_sites_service(cityId);
             if (result.status === 200) {
                 setSites(result.data);
             }

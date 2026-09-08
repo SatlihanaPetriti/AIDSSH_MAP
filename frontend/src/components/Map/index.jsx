@@ -10,20 +10,19 @@ import Legend from "./Legend";
 import ExecutionLegend from "./ExecutionLegend";
 import "./index.css";
 
-const DEFAULT_COORDINATES = [41.33, 19.82];
-const DEFAULT_ZOOM = 12;
-
-const Map = () => {
+const Map = ({ city }) => {
     const { loading, error } = useSitesContext();
     const { executionSites, showExecutionLayer } = useExecutionSitesContext();
     const { filteredSites } = useMapUIContext();
+
+    const center = [city.lat, city.lon];
 
     return (
         <section id="map-container" aria-label="Harta interaktive">
             {loading && <div className="map-status">Duke ngarkuar...</div>}
             {error && <div className="map-status map-status-error">{error}</div>}
 
-            <MapContainer center={DEFAULT_COORDINATES} zoom={DEFAULT_ZOOM} zoomControl={false}>
+            <MapContainer center={center} zoom={city.zoom} zoomControl={false}>
                 <MapRefSetter />
                 <ZoomControl position="bottomright" />
 

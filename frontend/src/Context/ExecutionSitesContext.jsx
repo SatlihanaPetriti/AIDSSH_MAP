@@ -11,6 +11,7 @@ const ExecutionSitesContext = createContext({});
 
 // Provider
 const ExecutionSitesProvider = (props) => {
+    const { cityId } = props;
     const [executionSites, setExecutionSites] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -18,13 +19,13 @@ const ExecutionSitesProvider = (props) => {
 
     useEffect(() => {
         getAllExecutionSites();
-    }, []);
+    }, [cityId]);
 
-    // GET ALL
+    // GET ALL (for the given city, or every site if no cityId was passed)
     const getAllExecutionSites = async () => {
         setLoading(true);
         try {
-            const result = await get_execution_sites_service();
+            const result = await get_execution_sites_service(cityId);
             if (result.status === 200) {
                 setExecutionSites(result.data);
             }

@@ -1,23 +1,24 @@
+import { Link } from "react-router-dom";
 import { useExecutionSitesContext } from "../../Context/ExecutionSitesContext";
 import { useMapUIContext } from "../../Context/MapUIContext";
 import logo from "../../assets/logo.svg";
 import "./index.css";
 
-const Header = () => {
+const Header = ({ city }) => {
     const { showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
     const { filteredSites } = useMapUIContext();
 
     return (
         <header id="header">
-            <div className="header-logo">
+            <Link to="/" className="header-logo" title="Kthehu te qytetet">
                 <img src={logo} alt="AIDSSH" className="header-logo-img" />
-            </div>
+            </Link>
 
             <div className="header-sep" />
 
             <div className="header-title">
-                <h1>Harta e Dosjeve ORV</h1>
-                <p>DPB Tiranë</p>
+                <h1>Harta e Dosjeve ORV{city ? ` — ${city.name}` : ""}</h1>
+                <p>{city?.subtitle || "AIDSSH"}</p>
             </div>
 
             <button
