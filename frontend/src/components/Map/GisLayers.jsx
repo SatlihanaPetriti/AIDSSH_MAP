@@ -3,6 +3,7 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import albaniaBorderData from "../../assets/gis/albaniaBorder.json";
 import municipalitiesData from "../../assets/gis/municipalities.json";
+import { getMunicipalityName } from "../../db/municipalities";
 
 const ALBANIA_STYLE = {
     color: "#5b0000",
@@ -22,11 +23,6 @@ const MUNICIPALITY_STYLE = {
     fillOpacity: 0,
     lineJoin: "round",
     lineCap: "round",
-};
-
-const getMunicipalityName = (feature) => {
-    const p = feature.properties || {};
-    return p.shapeName || p.ADM2_EN || p.ADM2_SQ || p.NAME_2 || p.NAME || p.name || p.Name || "Bashki";
 };
 
 const GisLayers = ({ cityName }) => {
