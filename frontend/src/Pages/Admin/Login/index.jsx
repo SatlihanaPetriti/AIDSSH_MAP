@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUserContext } from "../../../Context/AuthContext";
 import logo from "../../../assets/logo.svg";
+import "../../../components/Admin/admin.css";
 import "./index.css";
 
 const Login = () => {

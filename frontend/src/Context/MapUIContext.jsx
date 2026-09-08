@@ -79,13 +79,6 @@ const MapUIProvider = (props) => {
         }, 320);
     };
 
-    // The map is mounted while #app is still display:none (behind the intro
-    // screen), so Leaflet measures a 0x0 container and only loads one tile.
-    // Call this once #app becomes visible to make it re-measure.
-    const refreshMapSize = () => {
-        mapRef.current?.invalidateSize();
-    };
-
     const filteredSites = useMemo(() => {
         const query = searchQuery.toLowerCase().trim();
 
@@ -162,7 +155,6 @@ const MapUIProvider = (props) => {
         focusSite,
         setMapInstance,
         registerMarker,
-        refreshMapSize,
     };
 
     return (
