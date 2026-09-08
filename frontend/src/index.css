@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --teal: #1C809D;
+    --teal-deep: #135F75;
+    --orange: #F5821F;
+    --maroon: #89191C;
+    --cream: #FFEEDF;
+    --ink: #2A2420;
+    --ink-soft: #6B5F55;
+    --line: #E7DCCC;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
