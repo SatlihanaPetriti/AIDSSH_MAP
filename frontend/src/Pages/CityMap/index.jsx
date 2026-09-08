@@ -2,6 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { useCitiesContext } from "../../Context/CitiesContext";
 import { SitesProvider } from "../../Context/SitesContext";
 import { ExecutionSitesProvider } from "../../Context/ExecutionSitesContext";
+import { ErasProvider } from "../../Context/ErasContext";
 import { MapUIProvider } from "../../Context/MapUIContext";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -25,16 +26,18 @@ const CityMap = () => {
     return (
         <SitesProvider cityId={city.id}>
             <ExecutionSitesProvider cityId={city.id}>
-                <MapUIProvider>
-                    <div id="app" className="visible shown">
-                        <Header city={city} />
-                        <main id="main">
-                            <Sidebar />
-                            <Map city={city} />
-                        </main>
-                    </div>
-                    <Toast />
-                </MapUIProvider>
+                <ErasProvider cityId={city.id}>
+                    <MapUIProvider>
+                        <div id="app" className="visible shown">
+                            <Header city={city} />
+                            <main id="main">
+                                <Sidebar />
+                                <Map city={city} />
+                            </main>
+                        </div>
+                        <Toast />
+                    </MapUIProvider>
+                </ErasProvider>
             </ExecutionSitesProvider>
         </SitesProvider>
     );

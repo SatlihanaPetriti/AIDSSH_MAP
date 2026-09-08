@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useMemo, useRef, useCallback } from "react";
 import { useSitesContext } from "./SitesContext";
-import { getCategories, getTypeConfig, ERA_RANGES, isActiveInPeriod } from "../db/typeConfig";
+import { useErasContext } from "./ErasContext";
+import { getCategories, getTypeConfig, isActiveInPeriod } from "../db/typeConfig";
 
 const MARKER_ZOOM = 15;
 
@@ -10,11 +11,12 @@ const MapUIContext = createContext({});
 // Provider
 const MapUIProvider = (props) => {
     const { sites } = useSitesContext();
+    const { eras } = useErasContext();
 
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedType, setSelectedType] = useState(null);
     const [selectedFondi, setSelectedFondi] = useState(null);
-    const [selectedEra, setSelectedEra] = useState(null);
+    const [selectedEraId, setSelectedEraId] = useState(null);
     const [labelsVisible, setLabelsVisible] = useState(false);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [activeSiteId, setActiveSiteId] = useState(null);
@@ -52,15 +54,15 @@ const MapUIProvider = (props) => {
         setSelectedFondi((prev) => (prev === fondi ? null : fondi));
     };
 
-    const toggleEraFilter = (era) => {
-        setSelectedEra((prev) => (prev === era ? null : era));
+    const toggleEraFilter = (eraId) => {
+        setSelectedEraId((prev) => (prev === eraId ? null : eraId));
     };
 
     const clearFilters = () => {
         setSearchQuery("");
         setSelectedType(null);
         setSelectedFondi(null);
-        setSelectedEra(null);
+        setSelectedEraId(null);
         showToast("Të gjitha tipet u shfaqën");
     };
 
@@ -79,6 +81,8 @@ const MapUIProvider = (props) => {
         }, 320);
     };
 
+    const selectedEra = eras.find((era) => era.id === selectedEraId) || null;
+
     const filteredSites = useMemo(() => {
         const query = searchQuery.toLowerCase().trim();
 
@@ -91,7 +95,7 @@ const MapUIProvider = (props) => {
                 site.objekti.toLowerCase().includes(query) ||
                 site.dosja.toLowerCase().includes(query) ||
                 site.tipiRaw.toLowerCase().includes(query);
-            const matchesEra = !selectedEra || isActiveInPeriod(site, ...ERA_RANGES[selectedEra]);
+            const matchesEra = !selectedEra || isActiveInPeriod(site, selectedEra.startYear, selectedEra.endYear);
 
             return matchesType && matchesFondi && matchesSearch && matchesEra;
         });
@@ -151,7 +155,8 @@ const MapUIProvider = (props) => {
         selectType,
         selectedFondi,
         toggleFondiFilter,
-        selectedEra,
+        eras,
+        selectedEraId,
         toggleEraFilter,
         clearFilters,
         labelsVisible,

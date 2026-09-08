@@ -83,11 +83,6 @@ export const EXECUTION_GROUPS = [
 
 export const EXECUTION_NOTE = 'Zonat janë mbledhur sipas dëshmive nga persona të mbijetuar, shoqata të ish të përndjekurve politikë, ish-funksionarë të regjimit dhe familjarë të viktimave, si vende të dyshuara ekzekutimi/varrimi gjatë periudhës së diktaturës në Tiranë.';
 
-export const ERA_RANGES = {
-    '1969': [1969, 1979],
-    '1980': [1980, 1991],
-};
-
 // Parse a messy Albanian date string → year integer or null
 export const parseYear = (str) => {
     if (!str) return null;

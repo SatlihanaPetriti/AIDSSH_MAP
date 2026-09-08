@@ -12,7 +12,8 @@ const Sidebar = () => {
         selectType,
         selectedFondi,
         toggleFondiFilter,
-        selectedEra,
+        eras,
+        selectedEraId,
         toggleEraFilter,
         clearFilters,
         labelsVisible,
@@ -94,23 +95,23 @@ const Sidebar = () => {
                         </button>
                     </div>
 
-                    <div className="filter-label filter-label-spaced">Filtro sipas periudhës</div>
-                    <div className="filter-row" style={{ gap: 6 }}>
-                        <button
-                            className={`era-btn ${selectedEra === "1969" ? "active" : ""}`}
-                            type="button"
-                            onClick={() => toggleEraFilter("1969")}
-                        >
-                            1969–1979
-                        </button>
-                        <button
-                            className={`era-btn ${selectedEra === "1980" ? "active" : ""}`}
-                            type="button"
-                            onClick={() => toggleEraFilter("1980")}
-                        >
-                            1980–1991
-                        </button>
-                    </div>
+                    {eras.length > 0 && (
+                        <>
+                            <div className="filter-label filter-label-spaced">Filtro sipas periudhës</div>
+                            <div className="filter-row" style={{ gap: 6, flexWrap: "wrap" }}>
+                                {eras.map((era) => (
+                                    <button
+                                        key={era.id}
+                                        className={`era-btn ${selectedEraId === era.id ? "active" : ""}`}
+                                        type="button"
+                                        onClick={() => toggleEraFilter(era.id)}
+                                    >
+                                        {era.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </>
+                    )}
 
                     {fondiList.length > 1 && (
                         <>

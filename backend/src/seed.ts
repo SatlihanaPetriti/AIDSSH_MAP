@@ -61,6 +61,12 @@ async function seed() {
     await executionSiteRepository.save(executionSites);
     console.log('Seeded execution sites:', executionSites.length);
 
+    await eraRepository.save([
+        { cityId: tirana.id, label: '1969–1979', startYear: 1969, endYear: 1979 },
+        { cityId: tirana.id, label: '1980–1991', startYear: 1980, endYear: 1991 },
+    ]);
+    console.log('Seeded eras: 2');
+
     await dataSource.destroy();
     console.log('Done');
 }
