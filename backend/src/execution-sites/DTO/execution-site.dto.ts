@@ -3,6 +3,10 @@ import { IsString, IsNotEmpty, IsNumber, IsOptional, IsIn } from "class-validato
 export class ExecutionSiteDto{
 
     @IsNotEmpty()
+    @IsNumber()
+    cityId:number;
+
+    @IsNotEmpty()
     @IsString()
     name:string;
 

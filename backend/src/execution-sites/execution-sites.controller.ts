@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { ExecutionSitesService } from './execution-sites.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { Roles } from '../decorators/roles.decorator';
@@ -13,8 +13,8 @@ export class ExecutionSitesController {
 
     @Get()
     @IsPublic()
-    public async findAll() {
-        return this.executionSitesService.findAll();
+    public async findAll(@Query('cityId') cityId?: string) {
+        return this.executionSitesService.findAll(cityId ? parseInt(cityId, 10) : undefined);
     }
 
     @Get(':id')

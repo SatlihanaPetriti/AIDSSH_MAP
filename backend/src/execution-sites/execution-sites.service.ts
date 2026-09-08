@@ -12,9 +12,9 @@ export class ExecutionSitesService {
         private readonly executionSiteRepository: Repository<ExecutionSiteEntity>
     ) { }
 
-    public async findAll(): Promise<ExecutionSiteEntity[]> {
+    public async findAll(cityId?: number): Promise<ExecutionSiteEntity[]> {
         try {
-            return await this.executionSiteRepository.find();
+            return await this.executionSiteRepository.find(cityId ? { where: { cityId } } : {});
         } catch (error) {
             throw new ErrorHandler('Failed to get execution sites', HttpStatus.BAD_REQUEST);
         }

@@ -1,9 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { CityEntity } from "../../cities/Entity/city.entity";
 
 @Entity('site')
 export class SiteEntity {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column()
+    cityId: number;
+
+    @ManyToOne(() => CityEntity, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'cityId' })
+    city: CityEntity;
 
     @Column()
     dosja: string;

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
+import { CityEntity } from './cities/Entity/city.entity';
 import { SiteEntity } from './sites/Entity/site.entity';
 import { ExecutionSiteEntity } from './execution-sites/Entity/execution-site.entity';
 
@@ -12,7 +13,7 @@ const dataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [SiteEntity, ExecutionSiteEntity],
+    entities: [CityEntity, SiteEntity, ExecutionSiteEntity],
     synchronize: true,
 });
 
@@ -25,15 +26,35 @@ async function seed() {
     await dataSource.initialize();
     console.log('Connected to database');
 
+    const cityRepository = dataSource.getRepository(CityEntity);
     const siteRepository = dataSource.getRepository(SiteEntity);
-    const orvSites = readSeedFile('orv-sites.json');
+    const executionSiteRepository = dataSource.getRepository(ExecutionSiteEntity);
+
     await siteRepository.clear();
+    await executionSiteRepository.clear();
+    await dataSource.query('DELETE FROM city');
+
+    const tirana = await cityRepository.save({
+        name: 'Tiranë',
+        slug: 'tirane',
+        subtitle: 'DPB Tiranë',
+        lat: 41.33,
+        lon: 19.82,
+        zoom: 12,
+    });
+    console.log('Seeded city:', tirana.name);
+
+    const orvSites = readSeedFile('orv-sites.json').map((site: Record<string, unknown>) => ({
+        ...site,
+        cityId: tirana.id,
+    }));
     await siteRepository.save(orvSites);
     console.log('Seeded sites:', orvSites.length);
 
-    const executionSiteRepository = dataSource.getRepository(ExecutionSiteEntity);
-    const executionSites = readSeedFile('execution-sites.json');
-    await executionSiteRepository.clear();
+    const executionSites = readSeedFile('execution-sites.json').map((site: Record<string, unknown>) => ({
+        ...site,
+        cityId: tirana.id,
+    }));
     await executionSiteRepository.save(executionSites);
     console.log('Seeded execution sites:', executionSites.length);
 

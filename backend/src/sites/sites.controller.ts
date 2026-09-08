@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { SitesService } from './sites.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { Roles } from '../decorators/roles.decorator';
@@ -13,8 +13,8 @@ export class SitesController {
 
     @Get()
     @IsPublic()
-    public async findAll() {
-        return this.sitesService.findAll();
+    public async findAll(@Query('cityId') cityId?: string) {
+        return this.sitesService.findAll(cityId ? parseInt(cityId, 10) : undefined);
     }
 
     @Get(':id')

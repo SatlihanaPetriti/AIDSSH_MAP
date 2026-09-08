@@ -4,6 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UserEntity } from './users/Entity/user.entity';
+import { CitiesModule } from './cities/cities.module';
+import { CityEntity } from './cities/Entity/city.entity';
 import { SitesModule } from './sites/sites.module';
 import { SiteEntity } from './sites/Entity/site.entity';
 import { ExecutionSitesModule } from './execution-sites/execution-sites.module';
@@ -23,12 +25,13 @@ import { AuthMiddleware } from './Middleware/auth.middleware';
                 username: configService.get<string>('DB_USERNAME'),
                 password: configService.get<string>('DB_PASSWORD'),
                 database: configService.get<string>('DB_NAME'),
-                entities: [UserEntity, SiteEntity, ExecutionSiteEntity],
+                entities: [UserEntity, CityEntity, SiteEntity, ExecutionSiteEntity],
                 synchronize: true,
             }),
         }),
         AuthModule,
         UsersModule,
+        CitiesModule,
         SitesModule,
         ExecutionSitesModule,
 
@@ -43,6 +46,9 @@ export class AppModule implements NestModule {
                 { path: 'auth/logout', method: RequestMethod.POST },
                 { path: 'users', method: RequestMethod.ALL },
                 { path: 'users/*path', method: RequestMethod.ALL },
+                { path: 'cities', method: RequestMethod.POST },
+                { path: 'cities/*path', method: RequestMethod.PUT },
+                { path: 'cities/*path', method: RequestMethod.DELETE },
                 { path: 'sites', method: RequestMethod.POST },
                 { path: 'sites/*path', method: RequestMethod.PUT },
                 { path: 'sites/*path', method: RequestMethod.DELETE },

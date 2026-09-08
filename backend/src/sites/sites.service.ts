@@ -12,9 +12,9 @@ export class SitesService {
         private readonly siteRepository: Repository<SiteEntity>
     ) { }
 
-    public async findAll(): Promise<SiteEntity[]> {
+    public async findAll(cityId?: number): Promise<SiteEntity[]> {
         try {
-            return await this.siteRepository.find();
+            return await this.siteRepository.find(cityId ? { where: { cityId } } : {});
         } catch (error) {
             throw new ErrorHandler('Failed to get sites', HttpStatus.BAD_REQUEST);
         }
