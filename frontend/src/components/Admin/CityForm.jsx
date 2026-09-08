@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MUNICIPALITY_NAMES, getMunicipalityCenter } from "../../db/municipalities";
+import { isCoordinate } from "./formUtils";
 
 const EMPTY = { name: "", slug: "", subtitle: "", lat: "", lon: "", zoom: 12 };
 
@@ -46,6 +47,12 @@ const CityForm = ({ initialData, onSubmit, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!isCoordinate(form.lat) || !isCoordinate(form.lon)) {
+            alert("Lat/Lon duhet të jenë numra dhjetorë të vlefshëm, p.sh. 41.3275");
+            return;
+        }
+
         onSubmit({
             name: form.name,
             slug: form.slug,
@@ -91,12 +98,12 @@ const CityForm = ({ initialData, onSubmit, onCancel }) => {
 
                 <label className="admin-field">
                     <span>Lat (qendra e hartës)</span>
-                    <input type="number" step="any" value={form.lat} onChange={handleChange("lat")} required />
+                    <input type="text" inputMode="decimal" value={form.lat} onChange={handleChange("lat")} placeholder="p.sh. 41.3275" required />
                 </label>
 
                 <label className="admin-field">
                     <span>Lon (qendra e hartës)</span>
-                    <input type="number" step="any" value={form.lon} onChange={handleChange("lon")} required />
+                    <input type="text" inputMode="decimal" value={form.lon} onChange={handleChange("lon")} placeholder="p.sh. 19.8187" required />
                 </label>
             </div>
 

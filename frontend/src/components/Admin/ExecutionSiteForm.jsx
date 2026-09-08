@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { isCoordinate } from "./formUtils";
 
 const EMPTY = {
     name: "",
@@ -29,6 +30,12 @@ const ExecutionSiteForm = ({ initialData, onSubmit, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!isCoordinate(form.lat) || !isCoordinate(form.lon)) {
+            alert("Lat/Lon duhet të jenë numra dhjetorë të vlefshëm, p.sh. 41.36835");
+            return;
+        }
+
         onSubmit({
             name: form.name,
             type: form.type,
@@ -69,12 +76,12 @@ const ExecutionSiteForm = ({ initialData, onSubmit, onCancel }) => {
 
                 <label className="admin-field">
                     <span>Lat</span>
-                    <input type="number" step="any" value={form.lat} onChange={handleChange("lat")} required />
+                    <input type="text" inputMode="decimal" value={form.lat} onChange={handleChange("lat")} placeholder="p.sh. 41.36835" required />
                 </label>
 
                 <label className="admin-field">
                     <span>Lon</span>
-                    <input type="number" step="any" value={form.lon} onChange={handleChange("lon")} required />
+                    <input type="text" inputMode="decimal" value={form.lon} onChange={handleChange("lon")} placeholder="p.sh. 19.92263" required />
                 </label>
 
                 <label className="admin-field admin-field-wide">
