@@ -2,8 +2,9 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 const API_URL = `${import.meta.env.VITE_BACKEND_URL}/sites`;
 
-// GET ALL
-export const get_sites_service = () => axios.get(API_URL);
+// GET ALL (optionally filtered by city)
+export const get_sites_service = (cityId) =>
+    axios.get(API_URL, { params: cityId ? { cityId } : {} });
 
 // GET BY ID
 export const get_site_by_id_service = (id) => axios.get(`${API_URL}/${id}`);
