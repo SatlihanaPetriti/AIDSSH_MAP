@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
+import { MUNICIPALITY_NAMES, getMunicipalityCenter } from "../../db/municipalities";
 
 const EMPTY = { name: "", slug: "", subtitle: "", lat: "", lon: "", zoom: 12 };
+
+const slugify = (text) =>
+    text
+        .normalize("NFD").replace(/\p{Diacritic}/gu, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
 
 const CityForm = ({ initialData, onSubmit, onCancel }) => {
     const [form, setForm] = useState(EMPTY);
@@ -11,6 +19,29 @@ const CityForm = ({ initialData, onSubmit, onCancel }) => {
 
     const handleChange = (field) => (e) => {
         setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    };
+
+    // Picking a municipality auto-fills the coordinates from its GIS polygon
+    // (bounding-box center + a zoom that roughly fits its extent), so nobody
+    // has to look up lat/lon by hand. Fields left blank get filled in;
+    // anything already typed is left alone.
+    const handleMunicipalitySelect = (e) => {
+        const name = e.target.value;
+        if (!name) return;
+
+        const center = getMunicipalityCenter(name);
+
+        setForm((prev) => ({
+            ...prev,
+            name: prev.name || name,
+            slug: prev.slug || slugify(name),
+            subtitle: prev.subtitle || `DPB ${name}`,
+            lat: center ? center.lat.toFixed(5) : prev.lat,
+            lon: center ? center.lon.toFixed(5) : prev.lon,
+            zoom: center ? center.zoom : prev.zoom,
+        }));
+
+        e.target.value = "";
     };
 
     const handleSubmit = (e) => {
@@ -27,6 +58,16 @@ const CityForm = ({ initialData, onSubmit, onCancel }) => {
 
     return (
         <form className="admin-form" onSubmit={handleSubmit}>
+            <label className="admin-field admin-field-wide">
+                <span>Zgjidh nga lista e bashkive — plotëson vetë Lat/Lon/Zoom</span>
+                <select defaultValue="" onChange={handleMunicipalitySelect}>
+                    <option value="">— zgjidh bashkinë —</option>
+                    {MUNICIPALITY_NAMES.map((name) => (
+                        <option key={name} value={name}>{name}</option>
+                    ))}
+                </select>
+            </label>
+
             <div className="admin-form-grid">
                 <label className="admin-field">
                     <span>Emri i qytetit</span>
