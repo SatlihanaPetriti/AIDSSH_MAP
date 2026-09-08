@@ -393,6 +393,11 @@
     transition: color 0.2s;
 }
 
+.label-toggle-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
 .label-toggle-btn:hover {
     color: var(--ink);
 }

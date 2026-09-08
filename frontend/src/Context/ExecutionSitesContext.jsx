@@ -78,7 +78,10 @@ const ExecutionSitesProvider = (props) => {
         }
     };
 
-    const toggleExecutionLayer = () => setShowExecutionLayer((prev) => !prev);
+    const toggleExecutionLayer = () => {
+        if (executionSites.length === 0) return;
+        setShowExecutionLayer((prev) => !prev);
+    };
 
     const values = {
         executionSites,

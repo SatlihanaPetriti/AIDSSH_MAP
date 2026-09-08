@@ -5,8 +5,9 @@ import logo from "../../assets/logo.svg";
 import "./index.css";
 
 const Header = ({ city }) => {
-    const { showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
+    const { executionSites, showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
     const { filteredSites } = useMapUIContext();
+    const hasExecutionSites = executionSites.length > 0;
 
     return (
         <header id="header">
@@ -25,7 +26,8 @@ const Header = ({ city }) => {
                 className={`header-map-toggle ${showExecutionLayer ? "active" : ""}`}
                 type="button"
                 onClick={toggleExecutionLayer}
-                title="Shfaq/fshih hartën e zonave të ekzekutimit dhe varrimit"
+                disabled={!hasExecutionSites}
+                title={hasExecutionSites ? "Shfaq/fshih hartën e zonave të ekzekutimit dhe varrimit" : "Nuk ka ende vende ekzekutimi/varrimi për këtë qytet"}
             >
                 <span className="header-map-toggle-dot" />
                 Harta e Ekzekutimeve/Varrimeve

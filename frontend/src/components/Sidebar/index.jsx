@@ -27,7 +27,8 @@ const Sidebar = () => {
         fondiList,
     } = useMapUIContext();
 
-    const { showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
+    const { executionSites, showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
+    const hasExecutionSites = executionSites.length > 0;
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -184,7 +185,13 @@ const Sidebar = () => {
 
                     <div className="filter-label filter-label-spaced">Shtresë: Vendet e ekzekutimit/varrimit</div>
                     <div className="filter-row">
-                        <button className="label-toggle-btn" type="button" onClick={toggleExecutionLayer}>
+                        <button
+                            className="label-toggle-btn"
+                            type="button"
+                            onClick={toggleExecutionLayer}
+                            disabled={!hasExecutionSites}
+                            title={hasExecutionSites ? "" : "Nuk ka ende vende ekzekutimi/varrimi për këtë qytet"}
+                        >
                             <span className={`label-toggle-track ${showExecutionLayer ? "on" : ""}`}>
                                 <span className={`label-toggle-thumb ${showExecutionLayer ? "on" : ""}`} />
                             </span>

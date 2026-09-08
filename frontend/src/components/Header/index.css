@@ -96,6 +96,16 @@
     border-color: rgba(255, 255, 255, 0.5);
 }
 
+.header-map-toggle:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.header-map-toggle:disabled:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.32);
+}
+
 .header-map-toggle.active {
     background: var(--maroon);
     border-color: var(--maroon);
