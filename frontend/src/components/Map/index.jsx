@@ -33,7 +33,7 @@ const Map = ({ city }) => {
                     attribution="Tiles &copy; Esri &mdash; Esri, HERE, Garmin, FAO, NOAA, USGS"
                 />
 
-                <GisLayers />
+                <GisLayers cityName={city.name} />
 
                 {!showExecutionLayer && <OrvMarkers sites={filteredSites} />}
                 {showExecutionLayer && <ExecutionLayer sites={executionSites} />}

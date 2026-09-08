@@ -14,7 +14,7 @@ const ALBANIA_STYLE = {
     interactive: false,
 };
 
-const TIRANA_STYLE = {
+const MUNICIPALITY_STYLE = {
     color: "#8b0000",
     weight: 1.2,
     opacity: 0.8,
@@ -29,7 +29,7 @@ const getMunicipalityName = (feature) => {
     return p.shapeName || p.ADM2_EN || p.ADM2_SQ || p.NAME_2 || p.NAME || p.name || p.Name || "Bashki";
 };
 
-const GisLayers = () => {
+const GisLayers = ({ cityName }) => {
     const map = useMap();
 
     useEffect(() => {
@@ -47,14 +47,14 @@ const GisLayers = () => {
             style: ALBANIA_STYLE,
         }).addTo(map);
 
-        const tiranaOnly = {
+        const cityOnly = {
             type: "FeatureCollection",
-            features: municipalitiesData.features.filter((f) => getMunicipalityName(f) === "Tiranë"),
+            features: municipalitiesData.features.filter((f) => getMunicipalityName(f) === cityName),
         };
 
-        const municipalitiesLayer = L.geoJSON(tiranaOnly, {
+        const municipalitiesLayer = L.geoJSON(cityOnly, {
             pane: "gisPane",
-            style: TIRANA_STYLE,
+            style: MUNICIPALITY_STYLE,
             onEachFeature: (feature, layer) => {
                 layer.on("click", () => {
                     map.flyToBounds(layer.getBounds(), {
@@ -70,7 +70,7 @@ const GisLayers = () => {
             map.removeLayer(albaniaBorderLayer);
             map.removeLayer(municipalitiesLayer);
         };
-    }, [map]);
+    }, [map, cityName]);
 
     return null;
 };
