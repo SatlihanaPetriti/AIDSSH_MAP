@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Mali i Dajtit",
+    "type": "ekzekutim_varrim",
+    "lat": 41.36834969159035,
+    "lon": 19.92262774431883,
+    "color": "#6E0D11",
+    "description": "<strong>Vend ekzekutimi dhe vend varrimi i dyshuar.</strong><br><br>\n      Në këtë zonë janë gjetur eshtra të personave të ekzekutuar, sipas dëshmive dhe kërkimeve të kryera.",
+    "fadeMaxRadius": 1700
+  },
+  {
+    "name": "Linzë",
+    "type": "ekzekutim_varrim",
+    "lat": 41.355407,
+    "lon": 19.881956,
+    "color": "#8C1116",
+    "description": "<strong>Vend ekzekutimi dhe vend varrimi i dyshuar.</strong><br><br>\n      Zona përmendet në dëshmi si një prej vendeve të mundshme të ekzekutimeve dhe varrimeve.",
+    "fadeMaxRadius": 1200
+  },
+  {
+    "name": "Priskë",
+    "type": "ekzekutim_varrim",
+    "lat": 41.32149710138615,
+    "lon": 19.92327455741903,
+    "color": "#A91F28",
+    "description": "<strong>Vend ekzekutimi dhe vend varrimi.</strong>",
+    "fadeMaxRadius": 1200
+  },
+  {
+    "name": "Bregu i Lumit",
+    "type": "ekzekutim_varrim",
+    "lat": 41.358599,
+    "lon": 19.763997,
+    "color": "#D9636B",
+    "description": "<strong>Vend ekzekutimi dhe vend varrimi i dyshuar.</strong>",
+    "fadeMaxRadius": 1300
+  },
+  {
+    "name": "Pashkashesh",
+    "type": "ekzekutim",
+    "lat": 41.242661613782595,
+    "lon": 19.98811436585978,
+    "color": "#6E2332",
+    "description": "<strong>Vend ekzekutimi.</strong><br><br>\n      Katundi Pashkashesh i Tiranës përmendet në dëshmi si vend ekzekutimi.",
+    "fadeMaxRadius": 1200
+  },
+  {
+    "name": "Varri i Bamit",
+    "type": "varrim",
+    "lat": 41.338266,
+    "lon": 19.8413837,
+    "color": "#C94550",
+    "description": "<strong>Vend varrimi i dyshuar.</strong><br><br>\n      Toponim i njohur në dëshmitë gojore si vend i mundshëm varrimi.",
+    "fadeMaxRadius": 700
+  },
+  {
+    "name": "Tufinë",
+    "type": "varrim",
+    "lat": 41.3578619,
+    "lon": 19.8514426,
+    "color": "#B5232A",
+    "description": "<strong>Vend varrimi.</strong><br><br>\n      Këtu varroseshin të dënuarit që ndërronin jetë në spital gjatë vuajtjes së dënimit.",
+    "fadeMaxRadius": 1000
+  }
+]

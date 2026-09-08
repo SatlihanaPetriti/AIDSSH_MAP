@@ -1,0 +1,47 @@
+import 'dotenv/config';
+import { DataSource } from 'typeorm';
+import * as fs from 'fs';
+import * as path from 'path';
+import { SiteEntity } from './sites/Entity/site.entity';
+import { ExecutionSiteEntity } from './execution-sites/Entity/execution-site.entity';
+
+const dataSource = new DataSource({
+    type: 'mysql',
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    entities: [SiteEntity, ExecutionSiteEntity],
+    synchronize: true,
+});
+
+function readSeedFile(fileName: string) {
+    const filePath = path.join(__dirname, '../seed-data', fileName);
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+async function seed() {
+    await dataSource.initialize();
+    console.log('Connected to database');
+
+    const siteRepository = dataSource.getRepository(SiteEntity);
+    const orvSites = readSeedFile('orv-sites.json');
+    await siteRepository.clear();
+    await siteRepository.save(orvSites);
+    console.log('Seeded sites:', orvSites.length);
+
+    const executionSiteRepository = dataSource.getRepository(ExecutionSiteEntity);
+    const executionSites = readSeedFile('execution-sites.json');
+    await executionSiteRepository.clear();
+    await executionSiteRepository.save(executionSites);
+    console.log('Seeded execution sites:', executionSites.length);
+
+    await dataSource.destroy();
+    console.log('Done');
+}
+
+seed().catch((error) => {
+    console.error('Seed failed:', error);
+    process.exit(1);
+});
