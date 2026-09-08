@@ -36,9 +36,33 @@ const DEFAULT_TYPE_CONFIG = { color: '#8A6A3D', label: 'Pa kategori' };
 
 export const getCategories = (tipiRaw) => CATEGORY_SPLIT[tipiRaw] || [tipiRaw];
 
+// A stable color for any type string not in the curated TYPES palette above —
+// so a brand-new "Tipi" entered for another qytet still gets its own
+// distinct, consistent color instead of everyone sharing one gray fallback.
+// Returned as hex (not hsl()) since callers append alpha suffixes like
+// `${color}1c` to it for popup/legend backgrounds.
+const hslToHex = (h, s, l) => {
+    s /= 100;
+    l /= 100;
+    const k = (n) => (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    const toHex = (n) => Math.round(f(n) * 255).toString(16).padStart(2, '0');
+    return `#${toHex(0)}${toHex(8)}${toHex(4)}`;
+};
+
+const hashColor = (text) => {
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+        hash = text.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const hue = Math.abs(hash) % 360;
+    return hslToHex(hue, 55, 38);
+};
+
 export const getTypeConfig = (type) => {
     if (!type) return DEFAULT_TYPE_CONFIG;
-    return TYPES[type] || { ...DEFAULT_TYPE_CONFIG, label: type };
+    return TYPES[type] || { color: hashColor(type), label: type };
 };
 
 export const EXECUTION_FADE_STOPS = [

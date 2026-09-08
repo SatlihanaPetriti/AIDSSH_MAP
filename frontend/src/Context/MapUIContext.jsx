@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useMemo, useRef, useCallback } from "react";
 import { useSitesContext } from "./SitesContext";
-import { TYPES, getCategories, ERA_RANGES, isActiveInPeriod } from "../db/typeConfig";
+import { getCategories, getTypeConfig, ERA_RANGES, isActiveInPeriod } from "../db/typeConfig";
 
 const MARKER_ZOOM = 15;
 
@@ -48,8 +48,8 @@ const MapUIProvider = (props) => {
         setSelectedType(type);
     };
 
-    const toggleFondiFilter = () => {
-        setSelectedFondi((prev) => (prev === "Dega IV" ? null : "Dega IV"));
+    const toggleFondiFilter = (fondi) => {
+        setSelectedFondi((prev) => (prev === fondi ? null : fondi));
     };
 
     const toggleEraFilter = (era) => {
@@ -106,11 +106,24 @@ const MapUIProvider = (props) => {
         }, {});
     }, [sites]);
 
+    // Built from whatever "Tipi" values actually appear in this city's data —
+    // not a fixed list — so a new tipiRaw entered in admin shows up here and
+    // in the legend/filter automatically, with its own stable color.
     const typeList = useMemo(() => {
-        return Object.entries(TYPES)
-            .filter(([type]) => typeCounts[type])
-            .map(([type, config]) => ({ type, ...config, count: typeCounts[type] }));
+        return Object.entries(typeCounts)
+            .map(([type, count]) => ({ type, count, ...getTypeConfig(type) }))
+            .sort((a, b) => b.count - a.count);
     }, [typeCounts]);
+
+    const fondiList = useMemo(() => {
+        const counts = sites.reduce((acc, site) => {
+            if (site.fondi) acc[site.fondi] = (acc[site.fondi] || 0) + 1;
+            return acc;
+        }, {});
+        return Object.entries(counts)
+            .map(([fondi, count]) => ({ fondi, count }))
+            .sort((a, b) => b.count - a.count);
+    }, [sites]);
 
     const highlightListItem = (siteId) => {
         setActiveSiteId(siteId);
@@ -152,6 +165,7 @@ const MapUIProvider = (props) => {
         filteredSites,
         typeCounts,
         typeList,
+        fondiList,
         focusSite,
         setMapInstance,
         registerMarker,

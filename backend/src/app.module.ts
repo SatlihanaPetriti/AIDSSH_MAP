@@ -10,6 +10,8 @@ import { SitesModule } from './sites/sites.module';
 import { SiteEntity } from './sites/Entity/site.entity';
 import { ExecutionSitesModule } from './execution-sites/execution-sites.module';
 import { ExecutionSiteEntity } from './execution-sites/Entity/execution-site.entity';
+import { ErasModule } from './eras/eras.module';
+import { EraEntity } from './eras/Entity/era.entity';
 import { AuthMiddleware } from './Middleware/auth.middleware';
 @Module({
     imports: [
@@ -25,7 +27,7 @@ import { AuthMiddleware } from './Middleware/auth.middleware';
                 username: configService.get<string>('DB_USERNAME'),
                 password: configService.get<string>('DB_PASSWORD'),
                 database: configService.get<string>('DB_NAME'),
-                entities: [UserEntity, CityEntity, SiteEntity, ExecutionSiteEntity],
+                entities: [UserEntity, CityEntity, SiteEntity, ExecutionSiteEntity, EraEntity],
                 synchronize: true,
             }),
         }),
@@ -34,6 +36,7 @@ import { AuthMiddleware } from './Middleware/auth.middleware';
         CitiesModule,
         SitesModule,
         ExecutionSitesModule,
+        ErasModule,
 
     ],
 })
@@ -55,6 +58,9 @@ export class AppModule implements NestModule {
                 { path: 'execution-sites', method: RequestMethod.POST },
                 { path: 'execution-sites/*path', method: RequestMethod.PUT },
                 { path: 'execution-sites/*path', method: RequestMethod.DELETE },
+                { path: 'eras', method: RequestMethod.POST },
+                { path: 'eras/*path', method: RequestMethod.PUT },
+                { path: 'eras/*path', method: RequestMethod.DELETE },
             );
     }
 }

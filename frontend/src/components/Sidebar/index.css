@@ -353,7 +353,7 @@
 }
 
 .fondi-btn {
-    flex: 1;
+    flex: 0 1 auto;
     padding: 8px 10px;
     background: #fff;
     border: 1px solid #D9CBB5;

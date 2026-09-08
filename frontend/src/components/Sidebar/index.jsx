@@ -23,6 +23,7 @@ const Sidebar = () => {
         focusSite,
         filteredSites,
         typeList,
+        fondiList,
     } = useMapUIContext();
 
     const { showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
@@ -111,16 +112,23 @@ const Sidebar = () => {
                         </button>
                     </div>
 
-                    <div className="filter-label filter-label-spaced">Filtro sipas fondit</div>
-                    <div className="filter-row">
-                        <button
-                            className={`fondi-btn ${selectedFondi === "Dega IV" ? "active" : ""}`}
-                            type="button"
-                            onClick={toggleFondiFilter}
-                        >
-                            Dega IV
-                        </button>
-                    </div>
+                    {fondiList.length > 1 && (
+                        <>
+                            <div className="filter-label filter-label-spaced">Filtro sipas fondit</div>
+                            <div className="filter-row" style={{ flexWrap: "wrap" }}>
+                                {fondiList.map(({ fondi, count }) => (
+                                    <button
+                                        key={fondi}
+                                        className={`fondi-btn ${selectedFondi === fondi ? "active" : ""}`}
+                                        type="button"
+                                        onClick={() => toggleFondiFilter(fondi)}
+                                    >
+                                        {fondi} ({count})
+                                    </button>
+                                ))}
+                            </div>
+                        </>
+                    )}
 
                     <div className="filter-label">Filtro sipas tipit</div>
                     <div className="filter-row">

@@ -5,6 +5,7 @@ import * as path from 'path';
 import { CityEntity } from './cities/Entity/city.entity';
 import { SiteEntity } from './sites/Entity/site.entity';
 import { ExecutionSiteEntity } from './execution-sites/Entity/execution-site.entity';
+import { EraEntity } from './eras/Entity/era.entity';
 
 const dataSource = new DataSource({
     type: 'mysql',
@@ -13,7 +14,7 @@ const dataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: [CityEntity, SiteEntity, ExecutionSiteEntity],
+    entities: [CityEntity, SiteEntity, ExecutionSiteEntity, EraEntity],
     synchronize: true,
 });
 
@@ -29,9 +30,11 @@ async function seed() {
     const cityRepository = dataSource.getRepository(CityEntity);
     const siteRepository = dataSource.getRepository(SiteEntity);
     const executionSiteRepository = dataSource.getRepository(ExecutionSiteEntity);
+    const eraRepository = dataSource.getRepository(EraEntity);
 
     await siteRepository.clear();
     await executionSiteRepository.clear();
+    await eraRepository.clear();
     await dataSource.query('DELETE FROM city');
 
     const tirana = await cityRepository.save({
