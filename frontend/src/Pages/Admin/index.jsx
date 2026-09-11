@@ -16,7 +16,7 @@ const AdminRouter = () => {
                     path=""
                     element={
                         <ProtectedRoute requiredRole="admin">
-                            <AdminLayout>
+                            <AdminLayout wide>
                                 <Dashboard />
                             </AdminLayout>
                         </ProtectedRoute>

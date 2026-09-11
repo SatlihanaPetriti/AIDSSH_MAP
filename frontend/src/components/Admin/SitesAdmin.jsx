@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { useSitesContext } from "../../Context/SitesContext";
 import SiteForm from "./SiteForm";
+import CollapsibleSection from "./CollapsibleSection";
 
 const SitesAdmin = ({ cityId }) => {
     const { sites, loading, createSite, updateSite, deleteSite } = useSitesContext();
     const [editingSite, setEditingSite] = useState(null);
     const [showForm, setShowForm] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const openCreate = () => {
         setEditingSite(null);
         setShowForm(true);
+        setOpen(true);
     };
 
     const openEdit = (site) => {
         setEditingSite(site);
         setShowForm(true);
+        setOpen(true);
     };
 
     const closeForm = () => {
@@ -38,14 +42,17 @@ const SitesAdmin = ({ cityId }) => {
     };
 
     return (
-        <section className="admin-section">
-            <div className="admin-section-header">
-                <h2>Objektet ORV ({sites.length})</h2>
+        <CollapsibleSection
+            title="Objektet ORV"
+            count={sites.length}
+            open={open}
+            onToggle={() => setOpen((prev) => !prev)}
+            actions={
                 <button type="button" className="admin-btn admin-btn-primary" onClick={openCreate}>
                     + Shto objekt
                 </button>
-            </div>
-
+            }
+        >
             {showForm && (
                 <SiteForm initialData={editingSite} onSubmit={handleSubmit} onCancel={closeForm} />
             )}
@@ -85,7 +92,7 @@ const SitesAdmin = ({ cityId }) => {
             {!loading && sites.length === 0 && (
                 <div className="admin-table-empty">Ende nuk ka objekte për këtë qytet.</div>
             )}
-        </section>
+        </CollapsibleSection>
     );
 };
 

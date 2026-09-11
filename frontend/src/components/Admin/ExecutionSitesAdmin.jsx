@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { useExecutionSitesContext } from "../../Context/ExecutionSitesContext";
 import ExecutionSiteForm from "./ExecutionSiteForm";
+import CollapsibleSection from "./CollapsibleSection";
 
 const ExecutionSitesAdmin = ({ cityId }) => {
     const { executionSites, loading, createExecutionSite, updateExecutionSite, deleteExecutionSite } = useExecutionSitesContext();
     const [editingSite, setEditingSite] = useState(null);
     const [showForm, setShowForm] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const openCreate = () => {
         setEditingSite(null);
         setShowForm(true);
+        setOpen(true);
     };
 
     const openEdit = (site) => {
         setEditingSite(site);
         setShowForm(true);
+        setOpen(true);
     };
 
     const closeForm = () => {
@@ -38,14 +42,17 @@ const ExecutionSitesAdmin = ({ cityId }) => {
     };
 
     return (
-        <section className="admin-section">
-            <div className="admin-section-header">
-                <h2>Vendet e Ekzekutimit/Varrimit ({executionSites.length})</h2>
+        <CollapsibleSection
+            title="Vendet e Ekzekutimit/Varrimit"
+            count={executionSites.length}
+            open={open}
+            onToggle={() => setOpen((prev) => !prev)}
+            actions={
                 <button type="button" className="admin-btn admin-btn-primary" onClick={openCreate}>
                     + Shto vend
                 </button>
-            </div>
-
+            }
+        >
             {showForm && (
                 <ExecutionSiteForm initialData={editingSite} onSubmit={handleSubmit} onCancel={closeForm} />
             )}
@@ -81,7 +88,7 @@ const ExecutionSitesAdmin = ({ cityId }) => {
             {!loading && executionSites.length === 0 && (
                 <div className="admin-table-empty">Ende nuk ka vende ekzekutimi/varrimi për këtë qytet.</div>
             )}
-        </section>
+        </CollapsibleSection>
     );
 };
 

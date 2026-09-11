@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { useErasContext } from "../../Context/ErasContext";
 import EraForm from "./EraForm";
+import CollapsibleSection from "./CollapsibleSection";
 
 const ErasAdmin = ({ cityId }) => {
     const { eras, loading, createEra, updateEra, deleteEra } = useErasContext();
     const [editingEra, setEditingEra] = useState(null);
     const [showForm, setShowForm] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const openCreate = () => {
         setEditingEra(null);
         setShowForm(true);
+        setOpen(true);
     };
 
     const openEdit = (era) => {
         setEditingEra(era);
         setShowForm(true);
+        setOpen(true);
     };
 
     const closeForm = () => {
@@ -38,14 +42,17 @@ const ErasAdmin = ({ cityId }) => {
     };
 
     return (
-        <section className="admin-section">
-            <div className="admin-section-header">
-                <h2>Filtri i Periudhës ({eras.length})</h2>
+        <CollapsibleSection
+            title="Filtri i Periudhës"
+            count={eras.length}
+            open={open}
+            onToggle={() => setOpen((prev) => !prev)}
+            actions={
                 <button type="button" className="admin-btn admin-btn-primary" onClick={openCreate}>
                     + Shto periudhë
                 </button>
-            </div>
-
+            }
+        >
             {showForm && (
                 <EraForm initialData={editingEra} onSubmit={handleSubmit} onCancel={closeForm} />
             )}
@@ -83,7 +90,7 @@ const ErasAdmin = ({ cityId }) => {
             {!loading && eras.length === 0 && (
                 <div className="admin-table-empty">Ende nuk ka periudha të përcaktuara për këtë qytet.</div>
             )}
-        </section>
+        </CollapsibleSection>
     );
 };
 

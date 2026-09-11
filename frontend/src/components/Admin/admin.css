@@ -65,6 +65,52 @@
     box-sizing: border-box;
 }
 
+.admin-content-wide {
+    max-width: 1320px;
+}
+
+/* Dashboard: cities list + form on the left, Excel import as a right sidebar */
+.admin-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    align-items: start;
+}
+
+.admin-sidebar {
+    position: sticky;
+    top: 28px;
+}
+
+@media (max-width: 860px) {
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: static;
+    }
+}
+
+.admin-sidebar .admin-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.admin-sidebar .admin-section-actions {
+    width: 100%;
+}
+
+.admin-sidebar .admin-section-actions .admin-btn {
+    width: 100%;
+}
+
+.admin-sidebar input[type="file"] {
+    width: 100%;
+    font-size: 0.72rem;
+}
+
 .admin-status {
     color: var(--ink-soft);
     font-size: 0.8rem;
@@ -184,6 +230,33 @@
     margin: 0;
 }
 
+.admin-collapse-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+}
+
+.admin-collapse-chevron {
+    color: var(--teal-deep);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.admin-collapse-chevron.open {
+    transform: rotate(180deg);
+}
+
+.admin-section-actions {
+    display: flex;
+    gap: 8px;
+}
+
 /* Forms */
 .admin-form {
     background: var(--cream);
@@ -294,4 +367,57 @@
     color: var(--ink-soft);
     text-align: center;
     padding: 20px;
+}
+
+/* Excel import */
+.admin-import-hint {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0 0 14px;
+}
+
+.admin-import-summary {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-top: 16px;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-import-summary-ok {
+    color: var(--teal-deep);
+    font-weight: 600;
+}
+
+.admin-import-summary-warn {
+    color: var(--maroon);
+}
+
+.admin-import-summary .admin-form-actions {
+    margin-top: 6px;
+}
+
+.admin-import-success {
+    margin-top: 14px;
+    background: rgba(28, 128, 157, 0.08);
+    border: 1px solid var(--teal);
+    color: var(--teal-deep);
+    font-size: 0.8rem;
+    padding: 10px 14px;
+    border-radius: 3px;
+}
+
+.admin-import-error {
+    margin-top: 14px;
+    background: rgba(137, 25, 28, 0.08);
+    border: 1px solid var(--maroon);
+    color: var(--maroon);
+    font-size: 0.8rem;
+    padding: 10px 14px;
+    border-radius: 3px;
 }

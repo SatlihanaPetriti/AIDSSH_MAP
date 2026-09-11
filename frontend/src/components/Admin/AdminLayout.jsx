@@ -3,7 +3,7 @@ import { useUserContext } from "../../Context/AuthContext";
 import logo from "../../assets/logo.svg";
 import "./admin.css";
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children, wide }) => {
     const { user, logout } = useUserContext();
 
     return (
@@ -15,7 +15,7 @@ const AdminLayout = ({ children }) => {
                 </Link>
 
                 <div className="admin-topbar-actions">
-                    <Link to="/" className="admin-topbar-link">Faqja publike</Link>
+                    <Link to="/" className="admin-topbar-link" target="_blank" rel="noopener noreferrer">Faqja publike</Link>
                     {user?.email && <span className="admin-topbar-user">{user.email}</span>}
                     <button type="button" className="admin-btn admin-btn-outline" onClick={logout}>
                         Dil
@@ -23,7 +23,7 @@ const AdminLayout = ({ children }) => {
                 </div>
             </header>
 
-            <div className="admin-content">
+            <div className={`admin-content ${wide ? "admin-content-wide" : ""}`}>
                 {children}
             </div>
         </div>
