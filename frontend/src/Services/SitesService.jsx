@@ -12,6 +12,9 @@ export const get_site_by_id_service = (id) => axios.get(`${API_URL}/${id}`);
 // CREATE
 export const create_site_service = (data) => axios.post(API_URL, data);
 
+// CREATE MANY (bulk import, e.g. from an Excel file)
+export const create_sites_bulk_service = (sites) => axios.post(`${API_URL}/bulk`, { sites });
+
 // UPDATE
 export const update_site_service = (id, data) => axios.put(`${API_URL}/${id}`, data);
 
