@@ -9,8 +9,12 @@ const Home = () => {
     const [entered, setEntered] = useState(false);
     const { cities, loading } = useCitiesContext();
 
+    const handleEnter = () => {
+        setEntered(true);
+    };
+
     if (!entered) {
-        return <Intro onEnter={() => setEntered(true)} />;
+        return <Intro onEnter={handleEnter} />;
     }
 
     return (
