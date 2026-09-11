@@ -53,6 +53,7 @@ export class AppModule implements NestModule {
                 { path: 'cities/*path', method: RequestMethod.PUT },
                 { path: 'cities/*path', method: RequestMethod.DELETE },
                 { path: 'sites', method: RequestMethod.POST },
+                { path: 'sites/*path', method: RequestMethod.POST },
                 { path: 'sites/*path', method: RequestMethod.PUT },
                 { path: 'sites/*path', method: RequestMethod.DELETE },
                 { path: 'execution-sites', method: RequestMethod.POST },

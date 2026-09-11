@@ -36,6 +36,14 @@ export class SitesService {
         }
     }
 
+    public async createManySites(sites: SiteDto[]): Promise<SiteEntity[]> {
+        try {
+            return await this.siteRepository.save(sites);
+        } catch (error) {
+            throw new ErrorHandler('Failed to import sites', HttpStatus.BAD_REQUEST);
+        }
+    }
+
     public async updateSite(id: number, data: Partial<SiteEntity>): Promise<SiteEntity> {
         const existing = await this.siteRepository.findOne({ where: { id } });
         if (!existing) {

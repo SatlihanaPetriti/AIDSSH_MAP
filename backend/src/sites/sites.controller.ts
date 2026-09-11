@@ -4,6 +4,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { Roles } from '../decorators/roles.decorator';
 import { IsPublic } from '../decorators/public.decorator';
 import { SiteDto } from './DTO/site.dto';
+import { BulkSitesDto } from './DTO/bulk-sites.dto';
 import { SiteEntity } from './Entity/site.entity';
 
 @Controller('sites')
@@ -27,6 +28,12 @@ export class SitesController {
     @Roles('admin')
     public async create(@Body() param: SiteDto): Promise<SiteEntity> {
         return this.sitesService.createSite(param);
+    }
+
+    @Post('bulk')
+    @Roles('admin')
+    public async createMany(@Body() param: BulkSitesDto): Promise<SiteEntity[]> {
+        return this.sitesService.createManySites(param.sites);
     }
 
     @Put(':id')
