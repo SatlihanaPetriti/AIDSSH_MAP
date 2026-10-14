@@ -185,7 +185,7 @@
 
 .admin-btn-outline {
     background: var(--paper);
-    border-color: #D9CBB5;
+    border-color: var(--border);
     color: var(--ink);
 }
 
@@ -296,7 +296,7 @@
 .admin-field input,
 .admin-field select,
 .admin-field textarea {
-    border: 1px solid #D9CBB5;
+    border: 1px solid var(--border);
     border-radius: 4px;
     padding: 11px 13px;
     font-size: 0.82rem;
@@ -404,7 +404,7 @@
 
 .admin-import-success {
     margin-top: 14px;
-    background: rgba(28, 128, 157, 0.08);
+    background: var(--accent-pale);
     border: 1px solid var(--teal);
     color: var(--teal-deep);
     font-size: 0.8rem;
@@ -414,7 +414,7 @@
 
 .admin-import-error {
     margin-top: 14px;
-    background: rgba(137, 25, 28, 0.08);
+    background: #F4E6E6;
     border: 1px solid var(--maroon);
     color: var(--maroon);
     font-size: 0.8rem;

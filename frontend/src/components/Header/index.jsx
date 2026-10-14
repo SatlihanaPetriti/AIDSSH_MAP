@@ -15,11 +15,9 @@ const Header = ({ city }) => {
                 <img src={logo} alt="AIDSSH" className="header-logo-img" />
             </Link>
 
-            <div className="header-sep" />
-
             <div className="header-title">
                 <h1>Harta e Dosjeve ORV{city ? ` — ${city.name}` : ""}</h1>
-                <p>{city?.subtitle || "AIDSSH"}</p>
+                {city?.subtitle && <p>{city.subtitle}</p>}
             </div>
 
             <button
@@ -27,16 +25,14 @@ const Header = ({ city }) => {
                 type="button"
                 onClick={toggleExecutionLayer}
                 disabled={!hasExecutionSites}
-                title={hasExecutionSites ? "Shfaq/fshih hartën e zonave të ekzekutimit dhe varrimit" : "Nuk ka ende vende ekzekutimi/varrimi për këtë qytet"}
+                aria-pressed={showExecutionLayer}
+                title={hasExecutionSites ? "Kalo midis hartës së objekteve dhe hartës së ekzekutimeve/varrimeve" : "Nuk ka ende vende ekzekutimi/varrimi për këtë qytet"}
             >
-                <span className="header-map-toggle-dot" />
-                Harta e Ekzekutimeve/Varrimeve
+                {showExecutionLayer ? "Kthehu te objektet" : "Harta e ekzekutimeve/varrimeve"}
             </button>
 
             <div className="header-count">
-                <div className="count-badge">
-                    <strong>{filteredSites.length}</strong> Objekte
-                </div>
+                <strong>{filteredSites.length}</strong> objekte
             </div>
         </header>
     );

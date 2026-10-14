@@ -36,7 +36,7 @@
 
 .admin-login-error {
     width: 100%;
-    background: rgba(137, 25, 28, 0.08);
+    background: #F4E6E6;
     border: 1px solid var(--maroon);
     color: var(--maroon);
     font-size: 0.72rem;

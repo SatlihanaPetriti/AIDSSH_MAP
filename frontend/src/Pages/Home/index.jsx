@@ -22,7 +22,7 @@ const Home = () => {
             <header id="picker-header">
                 <img src={logo} alt="AIDSSH" className="picker-logo" />
                 <h1>Autoriteti për Informimin mbi Dokumentet e ish-Sigurimit të Shtetit</h1>
-                <p>Zgjidh një qytet për të parë hartën e dosjeve ORV</p>
+                <p>Zgjidhni një qytet për të parë hartën e dosjeve ORV</p>
             </header>
 
             <main id="picker-grid">
@@ -36,7 +36,7 @@ const Home = () => {
                     <Link key={city.id} to={`/harta/${city.slug}`} className="city-card">
                         <div className="city-card-name">{city.name}</div>
                         {city.subtitle && <div className="city-card-subtitle">{city.subtitle}</div>}
-                        <div className="city-card-cta">Shiko hartën →</div>
+                        <div className="city-card-cta">Hap hartën →</div>
                     </Link>
                 ))}
             </main>

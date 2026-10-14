@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useMapUIContext } from "../../Context/MapUIContext";
-import { useExecutionSitesContext } from "../../Context/ExecutionSitesContext";
 import { getTypeConfig, getCategories } from "../../db/typeConfig";
 import "./index.css";
 
@@ -27,9 +26,6 @@ const Sidebar = () => {
         fondiList,
     } = useMapUIContext();
 
-    const { executionSites, showExecutionLayer, toggleExecutionLayer } = useExecutionSitesContext();
-    const hasExecutionSites = executionSites.length > 0;
-
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -45,6 +41,7 @@ const Sidebar = () => {
     }, [dropdownOpen]);
 
     const dropdownConfig = getTypeConfig(selectedType);
+    const hasActiveFilters = Boolean(searchQuery || selectedType || selectedFondi || selectedEraId);
 
     return (
         <>
@@ -72,82 +69,28 @@ const Sidebar = () => {
                     <input
                         className="search-input"
                         type="text"
-                        placeholder="Kërko objekt, dosje..."
+                        placeholder="Kërko objekt ose dosje"
+                        aria-label="Kërko objekt ose dosje"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
 
-                <div className="results-bar">
-                    <span>Duke shfaqur <strong>{filteredSites.length}</strong> objekte</span>
-                    <button className="clear-btn" type="button" onClick={clearFilters}>
-                        Fshi filtrat
-                    </button>
-                </div>
-
                 <div className="sidebar-filters">
-                    <div className="filter-label filter-label-spaced">Emrat e objekteve</div>
-                    <div className="filter-row">
-                        <button className="label-toggle-btn" type="button" onClick={toggleLabels}>
-                            <span className={`label-toggle-track ${labelsVisible ? "on" : ""}`}>
-                                <span className={`label-toggle-thumb ${labelsVisible ? "on" : ""}`} />
-                            </span>
-                            <span>{labelsVisible ? "ON" : "OFF"}</span>
-                        </button>
-                    </div>
-
-                    {eras.length > 0 && (
-                        <>
-                            <div className="filter-label filter-label-spaced">Filtro sipas periudhës</div>
-                            <div className="filter-row" style={{ gap: 6, flexWrap: "wrap" }}>
-                                {eras.map((era) => (
-                                    <button
-                                        key={era.id}
-                                        className={`era-btn ${selectedEraId === era.id ? "active" : ""}`}
-                                        type="button"
-                                        onClick={() => toggleEraFilter(era.id)}
-                                    >
-                                        {era.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </>
-                    )}
-
-                    {fondiList.length > 1 && (
-                        <>
-                            <div className="filter-label filter-label-spaced">Filtro sipas fondit</div>
-                            <div className="filter-row" style={{ flexWrap: "wrap" }}>
-                                {fondiList.map(({ fondi, count }) => (
-                                    <button
-                                        key={fondi}
-                                        className={`fondi-btn ${selectedFondi === fondi ? "active" : ""}`}
-                                        type="button"
-                                        onClick={() => toggleFondiFilter(fondi)}
-                                    >
-                                        {fondi} ({count})
-                                    </button>
-                                ))}
-                            </div>
-                        </>
-                    )}
-
-                    <div className="filter-label">Filtro sipas tipit</div>
-                    <div className="filter-row">
+                    <div className="filter-group">
+                        <label className="filter-label" htmlFor="type-filter">Tipi</label>
                         <div className="dropdown-wrap" ref={dropdownRef}>
                             <button
+                                id="type-filter"
                                 className="dropdown-btn"
                                 type="button"
+                                aria-haspopup="listbox"
+                                aria-expanded={dropdownOpen}
                                 onClick={() => setDropdownOpen((prev) => !prev)}
                             >
-                                <span
-                                    className="dropdown-dot"
-                                    style={
-                                        selectedType
-                                            ? { background: dropdownConfig.color, border: "none" }
-                                            : { background: "transparent", border: "1.5px solid #A89A88" }
-                                    }
-                                />
+                                {selectedType && (
+                                    <span className="dropdown-dot" style={{ background: dropdownConfig.color }} />
+                                )}
                                 <span style={{ flex: 1 }}>{selectedType ? dropdownConfig.label : "Të gjitha tipet"}</span>
                                 <svg
                                     className="dropdown-arrow"
@@ -160,10 +103,12 @@ const Sidebar = () => {
                                 </svg>
                             </button>
 
-                            <div className={`dropdown-menu ${dropdownOpen ? "open" : ""}`}>
+                            <div className={`dropdown-menu ${dropdownOpen ? "open" : ""}`} role="listbox">
                                 {typeList.map(({ type, color, label, count }) => (
                                     <div
                                         key={type}
+                                        role="option"
+                                        aria-selected={selectedType === type}
                                         className={`dropdown-item ${selectedType === type ? "selected" : ""}`}
                                         onClick={() => {
                                             selectType(type);
@@ -177,30 +122,65 @@ const Sidebar = () => {
                                 ))}
                             </div>
                         </div>
-
-                        <button className="show-all-btn" type="button" title="Shfaq të gjitha" onClick={clearFilters}>
-                            Të gjitha
-                        </button>
                     </div>
 
-                    <div className="filter-label filter-label-spaced">Shtresë: Vendet e ekzekutimit/varrimit</div>
-                    <div className="filter-row">
-                        <button
-                            className="label-toggle-btn"
-                            type="button"
-                            onClick={toggleExecutionLayer}
-                            disabled={!hasExecutionSites}
-                            title={hasExecutionSites ? "" : "Nuk ka ende vende ekzekutimi/varrimi për këtë qytet"}
-                        >
-                            <span className={`label-toggle-track ${showExecutionLayer ? "on" : ""}`}>
-                                <span className={`label-toggle-thumb ${showExecutionLayer ? "on" : ""}`} />
-                            </span>
-                            <span>{showExecutionLayer ? "ON" : "OFF"}</span>
+                    {eras.length > 0 && (
+                        <div className="filter-group">
+                            <div className="filter-label">Periudha</div>
+                            <div className="chip-row">
+                                {eras.map((era) => (
+                                    <button
+                                        key={era.id}
+                                        className={`chip ${selectedEraId === era.id ? "active" : ""}`}
+                                        type="button"
+                                        aria-pressed={selectedEraId === era.id}
+                                        onClick={() => toggleEraFilter(era.id)}
+                                    >
+                                        {era.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {fondiList.length > 1 && (
+                        <div className="filter-group">
+                            <div className="filter-label">Fondi</div>
+                            <div className="chip-row">
+                                {fondiList.map(({ fondi, count }) => (
+                                    <button
+                                        key={fondi}
+                                        className={`chip ${selectedFondi === fondi ? "active" : ""}`}
+                                        type="button"
+                                        aria-pressed={selectedFondi === fondi}
+                                        onClick={() => toggleFondiFilter(fondi)}
+                                    >
+                                        {fondi} ({count})
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <label className="check-row">
+                        <input type="checkbox" checked={labelsVisible} onChange={toggleLabels} />
+                        <span>Shfaq emrat e objekteve në hartë</span>
+                    </label>
+                </div>
+
+                <div className="results-bar">
+                    <span><strong>{filteredSites.length}</strong> objekte</span>
+                    {hasActiveFilters && (
+                        <button className="clear-btn" type="button" onClick={clearFilters}>
+                            Pastro filtrat
                         </button>
-                    </div>
+                    )}
                 </div>
 
                 <div className="sidebar-list">
+                    {filteredSites.length === 0 && (
+                        <div className="list-empty">Asnjë objekt nuk përputhet me kërkimin.</div>
+                    )}
                     {filteredSites.map((site) => {
                         const primaryCategory = getCategories(site.tipiRaw)[0];
                         const config = getTypeConfig(primaryCategory);
@@ -216,10 +196,8 @@ const Sidebar = () => {
                                 <div className="list-item-body">
                                     <div className="list-item-name">{site.objekti}</div>
                                     <div className="list-item-meta">
-                                        <div className="list-item-type" style={{ background: `${config.color}22`, color: config.color }}>
-                                            {site.tipiRaw}
-                                        </div>
-                                        <span>{site.dosja}</span>
+                                        <span>{site.tipiRaw}</span>
+                                        {site.dosja && <span>· {site.dosja}</span>}
                                     </div>
                                 </div>
                             </div>

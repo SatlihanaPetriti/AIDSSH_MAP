@@ -8,7 +8,7 @@ const Intro = ({ onEnter }) => {
     const handleEnter = () => {
         if (exiting) return;
         setExiting(true);
-        setTimeout(onEnter, 550);
+        setTimeout(onEnter, 400);
     };
 
     return (
@@ -18,24 +18,10 @@ const Intro = ({ onEnter }) => {
             onClick={handleEnter}
             aria-label="Hyrje në hartë"
         >
-            <div className={`intro-rule-top ${exiting ? "flash" : ""}`} />
-            <div className={`intro-rule-bottom ${exiting ? "flash" : ""}`} />
-
-            <div className={`intro-rings ${exiting ? "burst" : ""}`}>
-                <span />
-                <span />
-                <span />
-            </div>
-
             <div className={`intro-content ${exiting ? "fading" : ""}`}>
-                <div className="logo-wrapper">
-                    <img src={logo} alt="AIDSSH" className="intro-logo-img" />
-                </div>
-
-                <div className="intro-hint">
-                    <span>Kliko për të hyrë</span>
-                    <span className="chevron" />
-                </div>
+                <img src={logo} alt="AIDSSH" className="intro-logo-img" />
+                <h1 className="intro-title">Harta e Dosjeve ORV</h1>
+                <button type="button" className="intro-enter">Hyr në hartë</button>
             </div>
         </section>
     );

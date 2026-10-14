@@ -1,17 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --teal: #1C809D;
-    --teal-deep: #135F75;
-    --teal-pale: #E4F1F4;
-    --orange: #F5821F;
-    --orange-deep: #CC6A14;
-    --maroon: #89191C;
-    --cream: #FFEEDF;
-    --paper: #FFFFFF;
-    --ink: #2A2420;
-    --ink-soft: #6B5F55;
-    --line: #E7DCCC;
+    /* Neutral, institutional palette: one accent color, everything else gray */
+    --accent: #135F75;
+    --accent-dark: #0E4A5C;
+    --accent-pale: #EEF3F5;
+    --bg: #F6F7F8;
+    --surface: #FFFFFF;
+    --border: #D9DDE1;
+    --text: #1F2933;
+    --text-muted: #5F6B76;
+
+    /* Legacy names used across the admin and older styles */
+    --teal: var(--accent);
+    --teal-deep: var(--accent);
+    --teal-pale: var(--accent-pale);
+    --orange: var(--accent);
+    --orange-deep: var(--accent-dark);
+    --maroon: var(--accent-dark);
+    --cream: var(--bg);
+    --paper: var(--surface);
+    --ink: var(--text);
+    --ink-soft: var(--text-muted);
+    --line: var(--border);
 }
 
 *,
@@ -27,7 +38,7 @@ body,
     padding: 0;
     height: 100%;
     font-family: 'Inter', sans-serif;
-    background: var(--cream);
+    background: var(--bg);
     color: var(--ink);
 }
 

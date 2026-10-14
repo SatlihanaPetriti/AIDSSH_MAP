@@ -1,13 +1,13 @@
 #map-container {
     flex: 1;
     position: relative;
-    background: #E9E2D6;
+    background: #E5E7EA;
 }
 
 #map-container .leaflet-container {
     width: 100%;
     height: 100%;
-    background: #E9E2D6;
+    background: #E5E7EA;
 }
 
 .map-status {
@@ -16,25 +16,24 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    background: #fff;
-    border: 1px solid var(--line);
+    background: var(--surface);
+    border: 1px solid var(--border);
     padding: 6px 16px;
-    border-radius: 3px;
-    font-size: 0.75rem;
-    color: var(--ink-soft);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 .map-status-error {
-    color: var(--maroon);
-    border-color: var(--maroon);
+    color: #9B2C2C;
+    border-color: #9B2C2C;
 }
 
 .leaflet-popup-content-wrapper {
-    background: var(--paper) !important;
-    border: 1px solid var(--line) !important;
-    border-top: 3px solid var(--teal) !important;
-    border-radius: 2px !important;
-    box-shadow: 0 10px 32px rgba(42, 36, 32, 0.22) !important;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 6px 20px rgba(31, 41, 51, 0.18) !important;
 }
 
 .leaflet-popup-tip-container {
@@ -46,20 +45,20 @@
 }
 
 .leaflet-bar a:hover {
-    background: var(--teal-pale) !important;
+    background: var(--accent-pale) !important;
 }
 
 .leaflet-control-attribution {
     background: rgba(255, 255, 255, 0.85) !important;
-    color: var(--ink-soft) !important;
-    font-size: 0.62rem !important;
+    color: var(--text-muted) !important;
+    font-size: 0.65rem !important;
 }
 
 /* Map pin marker entrance animation */
 .map-pin {
     opacity: 0;
-    transform: translateY(-14px);
-    animation: pinDrop 0.5s cubic-bezier(0.22, 0.9, 0.4, 1.15) forwards;
+    transform: translateY(-10px);
+    animation: pinDrop 0.35s ease-out forwards;
 }
 
 @keyframes pinDrop {
@@ -75,19 +74,19 @@
 }
 
 .map-pin:hover svg {
-    transform: scale(1.16);
+    transform: scale(1.12);
 }
 
 /* Marker permanent name label */
 .marker-label {
     background: rgba(255, 255, 255, 0.96);
-    border: 1px solid var(--line);
-    border-radius: 2px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
     padding: 2px 7px;
-    font-size: 0.66rem;
-    font-weight: 600;
-    color: var(--ink);
-    box-shadow: 0 2px 8px rgba(42, 36, 32, 0.14);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text);
+    box-shadow: 0 1px 4px rgba(31, 41, 51, 0.15);
     white-space: nowrap;
 }
 
@@ -97,61 +96,56 @@
     top: 16px;
     right: 16px;
     z-index: 400;
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid var(--line);
-    padding: 14px 16px;
-    min-width: 178px;
-    box-shadow: 0 4px 18px rgba(42, 36, 32, 0.12);
-    border-radius: 2px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    min-width: 190px;
+    box-shadow: 0 2px 10px rgba(31, 41, 51, 0.1);
+    border-radius: 6px;
     max-height: calc(100% - 32px);
     overflow-y: auto;
 }
 
 .legend-title {
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--teal-deep);
-    margin-bottom: 10px;
-    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 3px 0;
-    font-size: 0.7rem;
-    color: var(--ink-soft);
+    padding: 4px 0;
+    font-size: 0.82rem;
+    color: var(--text);
     cursor: pointer;
-    transition: color 0.2s;
 }
 
 .legend-item:hover {
-    color: var(--ink);
+    color: var(--accent);
 }
 
 .legend-item.dimmed {
-    opacity: 0.35;
+    opacity: 0.4;
 }
 
 .legend-item.selected {
-    color: var(--ink);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .legend-dot {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
 }
 
 .legend-count {
     margin-left: auto;
-    font-size: 0.62rem;
-    color: #A89A88;
-    font-weight: 600;
+    font-size: 0.78rem;
+    color: var(--text-muted);
 }
 
 /* ====== SHTRESA: VENDET E EKZEKUTIMIT/VARRIMIT ====== */
@@ -165,14 +159,13 @@
     bottom: 16px;
     left: 16px;
     z-index: 400;
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--maroon);
-    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
     min-width: 200px;
     max-width: 280px;
-    box-shadow: 0 4px 18px rgba(42, 36, 32, 0.12);
-    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(31, 41, 51, 0.1);
+    border-radius: 6px;
     max-height: calc(100% - 32px);
     overflow-y: auto;
     display: none;
@@ -183,10 +176,8 @@
 }
 
 .execution-legend-group-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.55;
+    font-size: 0.72rem;
+    color: var(--text-muted);
     margin-top: 8px;
     margin-bottom: 3px;
 }
@@ -196,53 +187,48 @@
     align-items: center;
     gap: 8px;
     padding: 3px 0;
-    font-size: 0.7rem;
-    color: var(--ink-soft);
+    font-size: 0.82rem;
+    color: var(--text);
 }
 
 .execution-legend-dot {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
-    border: 1px solid var(--maroon);
+    border: 1px solid var(--accent-dark);
 }
 
 .execution-legend-note {
-    font-size: 0.62rem;
-    color: var(--ink-soft);
+    font-size: 0.74rem;
+    color: var(--text-muted);
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--border);
     line-height: 1.5;
 }
 
-/* Popup-et e vogla për shtresën: Harta e Ekzekutimeve/Varrimeve */
-.execution-small-popup .leaflet-popup-content-wrapper {
-    border-top: 2px solid var(--maroon) !important;
-    box-shadow: 0 6px 18px rgba(42, 36, 32, 0.18) !important;
-}
-
+/* Popup-et e vogla për shtresën e ekzekutimeve/varrimeve */
 .execution-small-popup .popup-inner {
-    padding: 8px 10px;
-    min-width: 155px;
-    max-width: 245px;
+    padding: 10px 12px;
+    min-width: 160px;
+    max-width: 250px;
 }
 
 .execution-small-popup .popup-name {
-    font-size: 0.68rem;
-    line-height: 1.2;
+    font-size: 0.8rem;
+    line-height: 1.25;
     margin-bottom: 4px;
 }
 
 .execution-small-popup .popup-detail {
-    font-size: 0.56rem;
-    line-height: 1.28;
+    font-size: 0.72rem;
+    line-height: 1.3;
     margin-top: 2px;
 }
 
 .execution-small-popup .popup-divider {
-    margin: 5px 0;
+    margin: 6px 0;
 }
 
 .execution-small-popup .leaflet-popup-close-button {
@@ -253,61 +239,55 @@
 
 .popup-inner {
     padding: 16px 18px;
-    min-width: 240px;
+    min-width: 250px;
 }
 
 .popup-type-badge {
     display: inline-block;
-    padding: 2px 9px;
-    border-radius: 2px;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-bottom: 9px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .popup-name {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
     line-height: 1.35;
-    margin-bottom: 9px;
+    margin-bottom: 8px;
     font-family: 'Source Serif 4', serif;
 }
 
 .popup-detail {
-    font-size: 0.7rem;
-    color: var(--ink-soft);
+    font-size: 0.82rem;
+    color: var(--text);
     display: flex;
-    gap: 6px;
+    gap: 8px;
     align-items: baseline;
     margin-top: 5px;
 }
 
 .popup-detail .lbl {
-    color: var(--teal-deep);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.6rem;
-    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-size: 0.78rem;
     flex-shrink: 0;
-    min-width: 52px;
+    min-width: 54px;
 }
 
 .popup-detail .val {
-    color: var(--ink);
+    color: var(--text);
 }
 
 .popup-divider {
     height: 1px;
-    background: var(--line);
+    background: var(--border);
     margin: 10px 0;
 }
 
 .popup-coords {
-    font-size: 0.64rem;
-    color: #A89A88;
+    font-size: 0.72rem;
+    color: var(--text-muted);
     font-family: monospace;
-    letter-spacing: 0.03em;
 }

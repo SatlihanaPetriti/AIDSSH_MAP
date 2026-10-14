@@ -6,7 +6,7 @@ import municipalitiesData from "../../assets/gis/municipalities.json";
 import { getMunicipalityName } from "../../db/municipalities";
 
 const ALBANIA_STYLE = {
-    color: "#5b0000",
+    color: "#44505C",
     weight: 1.5,
     opacity: 1,
     fill: false,
@@ -16,7 +16,7 @@ const ALBANIA_STYLE = {
 };
 
 const MUNICIPALITY_STYLE = {
-    color: "#8b0000",
+    color: "#6F7F8C",
     weight: 1.2,
     opacity: 0.8,
     fillColor: "#ffffff",
