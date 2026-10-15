@@ -71,9 +71,9 @@ const ErasAdmin = ({ cityId }) => {
                 <tbody>
                     {eras.map((era) => (
                         <tr key={era.id}>
-                            <td>{era.label}</td>
-                            <td>{era.startYear}</td>
-                            <td>{era.endYear}</td>
+                            <td data-label="Etiketa">{era.label}</td>
+                            <td data-label="Viti fillestar">{era.startYear}</td>
+                            <td data-label="Viti përfundimtar">{era.endYear}</td>
                             <td className="admin-table-actions">
                                 <button type="button" className="admin-btn admin-btn-outline" onClick={() => openEdit(era)}>
                                     Ndrysho

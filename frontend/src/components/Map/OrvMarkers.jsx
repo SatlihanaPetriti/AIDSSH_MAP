@@ -64,10 +64,6 @@ const OrvMarkers = ({ sites }) => {
                                 <span className="lbl">Fondi</span>
                                 <span className="val">{site.fondi}</span>
                             </div>
-                            <div className="popup-detail">
-                                <span className="lbl">Tipi</span>
-                                <span className="val" style={{ opacity: 0.75 }}>{site.tipiRaw}</span>
-                            </div>
                             {(site.dataHapjes || site.dataMbylljes) && <div className="popup-divider" />}
                             {site.dataHapjes && (
                                 <div className="popup-detail">

@@ -72,10 +72,10 @@ const SitesAdmin = ({ cityId }) => {
                 <tbody>
                     {sites.map((site) => (
                         <tr key={site.id}>
-                            <td>{site.objekti}</td>
-                            <td>{site.dosja}</td>
-                            <td>{site.tipiRaw}</td>
-                            <td>{site.fondi}</td>
+                            <td data-label="Objekti">{site.objekti}</td>
+                            <td data-label="Dosja">{site.dosja}</td>
+                            <td data-label="Tipi">{site.tipiRaw}</td>
+                            <td data-label="Fondi">{site.fondi}</td>
                             <td className="admin-table-actions">
                                 <button type="button" className="admin-btn admin-btn-outline" onClick={() => openEdit(site)}>
                                     Ndrysho

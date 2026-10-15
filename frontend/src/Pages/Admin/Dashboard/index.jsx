@@ -66,9 +66,9 @@ const Dashboard = () => {
                     <tbody>
                         {cities.map((city) => (
                             <tr key={city.id}>
-                                <td>{city.name}</td>
-                                <td>{city.slug}</td>
-                                <td>{city.subtitle}</td>
+                                <td data-label="Emri">{city.name}</td>
+                                <td data-label="Slug">{city.slug}</td>
+                                <td data-label="Nëntitulli">{city.subtitle}</td>
                                 <td className="admin-table-actions">
                                     <Link to={`/admin/cities/${city.id}`} className="admin-btn admin-btn-outline">
                                         Menaxho të dhënat

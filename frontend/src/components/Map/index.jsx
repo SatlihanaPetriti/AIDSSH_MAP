@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, ZoomControl, useMap } from "react-leaflet";
 import { useSitesContext } from "../../Context/SitesContext";
 import { useExecutionSitesContext } from "../../Context/ExecutionSitesContext";
 import { useMapUIContext } from "../../Context/MapUIContext";
@@ -9,6 +10,16 @@ import ExecutionLayer from "./ExecutionLayer";
 import Legend from "./Legend";
 import ExecutionLegend from "./ExecutionLegend";
 import "./index.css";
+
+// Rillogarit përmasat e hartës kur menuja anësore shfaqet/fshihet
+const ResizeOnLayoutChange = ({ trigger }) => {
+    const map = useMap();
+    useEffect(() => {
+        const t = setTimeout(() => map.invalidateSize(), 50);
+        return () => clearTimeout(t);
+    }, [map, trigger]);
+    return null;
+};
 
 const Map = ({ city }) => {
     const { loading, error } = useSitesContext();
@@ -24,6 +35,7 @@ const Map = ({ city }) => {
 
             <MapContainer center={center} zoom={city.zoom} zoomControl={false}>
                 <MapRefSetter />
+                <ResizeOnLayoutChange trigger={showExecutionLayer} />
                 <ZoomControl position="bottomright" />
 
                 <TileLayer

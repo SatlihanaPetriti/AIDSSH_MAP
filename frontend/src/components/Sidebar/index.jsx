@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useMapUIContext } from "../../Context/MapUIContext";
+import { useExecutionSitesContext } from "../../Context/ExecutionSitesContext";
 import { getTypeConfig, getCategories } from "../../db/typeConfig";
 import "./index.css";
+
+const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
 const Sidebar = () => {
     const {
@@ -11,9 +14,9 @@ const Sidebar = () => {
         selectType,
         selectedFondi,
         toggleFondiFilter,
-        eras,
-        selectedEraId,
-        toggleEraFilter,
+        // eras,
+        // selectedEraId,
+        // toggleEraFilter,
         clearFilters,
         labelsVisible,
         toggleLabels,
@@ -25,6 +28,8 @@ const Sidebar = () => {
         typeList,
         fondiList,
     } = useMapUIContext();
+
+    const { showExecutionLayer } = useExecutionSitesContext();
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -41,7 +46,10 @@ const Sidebar = () => {
     }, [dropdownOpen]);
 
     const dropdownConfig = getTypeConfig(selectedType);
-    const hasActiveFilters = Boolean(searchQuery || selectedType || selectedFondi || selectedEraId);
+    const hasActiveFilters = Boolean(searchQuery || selectedType || selectedFondi /* || selectedEraId */);
+
+    // Menuja shfaqet vetëm te harta e objekteve, jo te harta e ekzekutimeve/varrimeve
+    if (showExecutionLayer) return null;
 
     return (
         <>
@@ -62,6 +70,7 @@ const Sidebar = () => {
                         strokeLinejoin="round"
                     />
                 </svg>
+                <span className="sidebar-toggle-label">{sidebarCollapsed ? "Filtra dhe lista" : "Mbyll"}</span>
             </button>
 
             <aside id="sidebar" className={sidebarCollapsed ? "collapsed" : ""}>
@@ -124,6 +133,7 @@ const Sidebar = () => {
                         </div>
                     </div>
 
+                    {/* Filtri i periudhës (çaktivizuar)
                     {eras.length > 0 && (
                         <div className="filter-group">
                             <div className="filter-label">Periudha</div>
@@ -142,6 +152,7 @@ const Sidebar = () => {
                             </div>
                         </div>
                     )}
+                    */}
 
                     {fondiList.length > 1 && (
                         <div className="filter-group">
@@ -190,7 +201,10 @@ const Sidebar = () => {
                                 key={site.id}
                                 id={`list-item-${site.id}`}
                                 className={`list-item ${activeSiteId === site.id ? "active" : ""}`}
-                                onClick={() => focusSite(site)}
+                                onClick={() => {
+                                    focusSite(site);
+                                    if (isMobile() && !sidebarCollapsed) toggleSidebar();
+                                }}
                             >
                                 <div className="list-item-dot" style={{ background: config.color }} />
                                 <div className="list-item-body">

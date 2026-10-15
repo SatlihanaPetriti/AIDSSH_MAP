@@ -2,7 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { useCitiesContext } from "../../Context/CitiesContext";
 import { SitesProvider } from "../../Context/SitesContext";
 import { ExecutionSitesProvider } from "../../Context/ExecutionSitesContext";
-import { ErasProvider } from "../../Context/ErasContext";
+// import { ErasProvider } from "../../Context/ErasContext"; // filtri i periudhës (çaktivizuar)
 import { MapUIProvider } from "../../Context/MapUIContext";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -26,7 +26,7 @@ const CityMap = () => {
     return (
         <SitesProvider cityId={city.id}>
             <ExecutionSitesProvider cityId={city.id}>
-                <ErasProvider cityId={city.id}>
+                {/* <ErasProvider cityId={city.id}> */}
                     <MapUIProvider>
                         <div id="app" className="visible shown">
                             <Header city={city} />
@@ -37,7 +37,7 @@ const CityMap = () => {
                         </div>
                         <Toast />
                     </MapUIProvider>
-                </ErasProvider>
+                {/* </ErasProvider> */}
             </ExecutionSitesProvider>
         </SitesProvider>
     );

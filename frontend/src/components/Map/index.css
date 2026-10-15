@@ -2,6 +2,16 @@
     flex: 1;
     position: relative;
     background: #E5E7EA;
+    /* Krijon kontekst të ri z-index: kontrollet e Leaflet (z-index 1000) mbeten brenda hartës
+       dhe nuk dalin mbi menunë anësore */
+    isolation: isolate;
+    z-index: 0;
+}
+
+/* Butonat e zoom-it qëndrojnë poshtë legjendave */
+#map-container .leaflet-top,
+#map-container .leaflet-bottom {
+    z-index: 350;
 }
 
 #map-container .leaflet-container {
@@ -36,8 +46,10 @@
     box-shadow: 0 6px 20px rgba(31, 41, 51, 0.18) !important;
 }
 
-.leaflet-popup-tip-container {
-    display: none;
+.leaflet-popup-tip {
+    background: var(--surface) !important;
+    border: 1px solid var(--border);
+    box-shadow: none !important;
 }
 
 .leaflet-popup-content {
@@ -102,15 +114,52 @@
     min-width: 190px;
     box-shadow: 0 2px 10px rgba(31, 41, 51, 0.1);
     border-radius: 6px;
-    max-height: calc(100% - 32px);
+    max-height: calc(100% - 32px - 96px); /* lë vend për butonat e zoom-it */
     overflow-y: auto;
 }
 
-.legend-title {
-    font-size: 0.78rem;
+.legend-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
     color: var(--text-muted);
-    margin-bottom: 8px;
+}
+
+.legend-header:hover {
+    color: var(--accent);
+}
+
+.legend-header:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.legend-title {
+    font-size: 0.82rem;
+    color: inherit;
     font-weight: 600;
+}
+
+.legend-chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.legend-body {
+    margin-top: 8px;
+}
+
+.map-legend.closed,
+.execution-legend.closed {
+    min-width: 0;
+    width: auto;
 }
 
 .legend-item {
@@ -290,4 +339,59 @@
     font-size: 0.72rem;
     color: var(--text-muted);
     font-family: monospace;
+}
+
+@media (max-width: 768px) {
+    .map-legend {
+        top: 12px;
+        right: 12px;
+        max-height: 45%;
+    }
+
+    .execution-legend {
+        left: 12px;
+        right: 12px;
+        bottom: 60px;
+        max-width: none;
+        max-height: 35%;
+    }
+
+    .popup-inner {
+        min-width: 0;
+        padding: 14px;
+    }
+
+    .marker-label {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .execution-legend.closed {
+        right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .popup-inner {
+        padding: 12px 14px;
+    }
+
+    .popup-name {
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+    }
+
+    .popup-detail {
+        font-size: 0.8rem;
+        margin-top: 3px;
+    }
+
+    .popup-coords {
+        display: none;
+    }
+
+    .popup-inner .popup-divider:nth-last-child(2) {
+        display: none;
+    }
 }

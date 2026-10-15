@@ -4,4 +4,9 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: true, // dëgjon në rrjet (p.sh. 192.168.100.173), jo vetëm localhost
+    port: 5173,
+    strictPort: true,
+  },
 })

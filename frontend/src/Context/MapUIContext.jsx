@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useMemo, useRef, useCallback } from "react";
 import { useSitesContext } from "./SitesContext";
-import { useErasContext } from "./ErasContext";
-import { getCategories, getTypeConfig, isActiveInPeriod } from "../db/typeConfig";
+// import { useErasContext } from "./ErasContext"; // filtri i periudhës (çaktivizuar)
+import { getCategories, getTypeConfig } from "../db/typeConfig"; // isActiveInPeriod: filtri i periudhës (çaktivizuar)
 
 const MARKER_ZOOM = 15;
 
@@ -11,14 +11,17 @@ const MapUIContext = createContext({});
 // Provider
 const MapUIProvider = (props) => {
     const { sites } = useSitesContext();
-    const { eras } = useErasContext();
+    // const { eras } = useErasContext();
 
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedType, setSelectedType] = useState(null);
     const [selectedFondi, setSelectedFondi] = useState(null);
-    const [selectedEraId, setSelectedEraId] = useState(null);
+    // const [selectedEraId, setSelectedEraId] = useState(null);
     const [labelsVisible, setLabelsVisible] = useState(false);
-    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    // Në ekran të vogël menuja fillon e mbyllur, që harta të duket menjëherë
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(
+        () => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches
+    );
     const [activeSiteId, setActiveSiteId] = useState(null);
     const [toast, setToast] = useState({ message: "", visible: false });
 
@@ -54,15 +57,15 @@ const MapUIProvider = (props) => {
         setSelectedFondi((prev) => (prev === fondi ? null : fondi));
     };
 
-    const toggleEraFilter = (eraId) => {
-        setSelectedEraId((prev) => (prev === eraId ? null : eraId));
-    };
+    // const toggleEraFilter = (eraId) => {
+    //     setSelectedEraId((prev) => (prev === eraId ? null : eraId));
+    // };
 
     const clearFilters = () => {
         setSearchQuery("");
         setSelectedType(null);
         setSelectedFondi(null);
-        setSelectedEraId(null);
+        // setSelectedEraId(null);
         showToast("Të gjitha tipet u shfaqën");
     };
 
@@ -81,7 +84,7 @@ const MapUIProvider = (props) => {
         }, 320);
     };
 
-    const selectedEra = eras.find((era) => era.id === selectedEraId) || null;
+    // const selectedEra = eras.find((era) => era.id === selectedEraId) || null;
 
     const filteredSites = useMemo(() => {
         const query = searchQuery.toLowerCase().trim();
@@ -95,11 +98,11 @@ const MapUIProvider = (props) => {
                 site.objekti.toLowerCase().includes(query) ||
                 site.dosja.toLowerCase().includes(query) ||
                 site.tipiRaw.toLowerCase().includes(query);
-            const matchesEra = !selectedEra || isActiveInPeriod(site, selectedEra.startYear, selectedEra.endYear);
+            // const matchesEra = !selectedEra || isActiveInPeriod(site, selectedEra.startYear, selectedEra.endYear);
 
-            return matchesType && matchesFondi && matchesSearch && matchesEra;
+            return matchesType && matchesFondi && matchesSearch; // && matchesEra
         });
-    }, [sites, searchQuery, selectedType, selectedFondi, selectedEra]);
+    }, [sites, searchQuery, selectedType, selectedFondi]); // selectedEra
 
     const typeCounts = useMemo(() => {
         return sites.reduce((counts, site) => {
@@ -155,9 +158,9 @@ const MapUIProvider = (props) => {
         selectType,
         selectedFondi,
         toggleFondiFilter,
-        eras,
-        selectedEraId,
-        toggleEraFilter,
+        // eras,
+        // selectedEraId,
+        // toggleEraFilter,
         clearFilters,
         labelsVisible,
         toggleLabels,

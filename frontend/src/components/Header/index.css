@@ -72,6 +72,7 @@
 .header-map-toggle:hover:not(:disabled) {
     border-color: var(--accent);
     background: var(--accent-pale);
+    color: var(--accent);
 }
 
 .header-map-toggle:disabled {
@@ -88,4 +89,45 @@
 .header-map-toggle:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+}
+
+
+
+@media (max-width: 768px) {
+    #header {
+        padding: 8px 12px;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .header-logo-img {
+        height: 32px;
+    }
+
+    .header-title {
+        padding-left: 12px;
+        flex: 1 1 0;
+    }
+
+    .header-title h1 {
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .header-title p {
+        display: none;
+    }
+
+    .header-count {
+        font-size: 0.8rem;
+    }
+
+    .header-map-toggle {
+        order: 3;
+        flex: 1 1 100%;
+        padding: 9px 12px;
+        text-align: center;
+    }
 }

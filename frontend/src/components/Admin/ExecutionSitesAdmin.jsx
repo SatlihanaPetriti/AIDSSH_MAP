@@ -70,8 +70,8 @@ const ExecutionSitesAdmin = ({ cityId }) => {
                 <tbody>
                     {executionSites.map((site) => (
                         <tr key={site.id}>
-                            <td>{site.name}</td>
-                            <td>{site.type}</td>
+                            <td data-label="Emri">{site.name}</td>
+                            <td data-label="Tipi">{site.type}</td>
                             <td className="admin-table-actions">
                                 <button type="button" className="admin-btn admin-btn-outline" onClick={() => openEdit(site)}>
                                     Ndrysho
